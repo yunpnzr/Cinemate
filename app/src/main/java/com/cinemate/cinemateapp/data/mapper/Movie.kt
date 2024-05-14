@@ -10,6 +10,9 @@ fun ResultNowPlayingResponse?.toMovieNowPlaying() =
     Movie(
         id = this?.id ?: 0,
         title = this?.title.orEmpty(),
+        date = this?.releaseDate.orEmpty(),
+        rating = this?.voteAverage ?: 0.0,
+        desc = this?.overview.orEmpty(),
         image = this?.posterPath.orEmpty()
     )
 
@@ -17,6 +20,9 @@ fun ResultPopularMovieResponse?.toPopularMovie() =
     Movie(
         id = this?.id ?: 0,
         title = this?.title.orEmpty(),
+        date = this?.releaseDate.orEmpty(),
+        rating = this?.voteAverage ?: 0.0,
+        desc = this?.overview.orEmpty(),
         image = this?.posterPath.orEmpty()
     )
 
@@ -24,6 +30,9 @@ fun ResultTopRatedResponse?.toTopRatedMovie() =
     Movie(
         id = this?.id ?: 0,
         title = this?.title.orEmpty(),
+        date = this?.releaseDate.orEmpty(),
+        rating = this?.voteAverage ?: 0.0,
+        desc = this?.overview.orEmpty(),
         image = this?.posterPath.orEmpty()
     )
 
@@ -31,6 +40,9 @@ fun ResultUpcomingMovieResponse?.toUpcomingMovie() =
     Movie(
         id = this?.id ?: 0,
         title = this?.title.orEmpty(),
+        date = this?.releaseDate.orEmpty(),
+        rating = this?.voteAverage ?: 0.0,
+        desc = this?.overview.orEmpty(),
         image = this?.posterPath.orEmpty()
     )
 

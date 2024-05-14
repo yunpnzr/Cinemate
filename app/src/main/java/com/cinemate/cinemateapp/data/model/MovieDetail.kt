@@ -5,5 +5,6 @@ data class MovieDetail (
     var title: String,
     var date: String,
     var rating: Double,
-    var desc: String
+    var desc: String,
+    var image: String
 )

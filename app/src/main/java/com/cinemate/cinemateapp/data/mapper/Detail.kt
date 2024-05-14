@@ -9,7 +9,8 @@ fun DetailMovieResponse?.toDetail() =
         title = this?.title.orEmpty(),
         date = this?.releaseDate.orEmpty(),
         rating = this?.voteAverage ?: 0.0,
-        desc = this?.overview.orEmpty()
+        desc = this?.overview.orEmpty(),
+        image = this?.posterPath.orEmpty()
     )
 
 fun Collection<DetailMovieResponse>?.toDetailMovie(): List<MovieDetail> = this?.map { it.toDetail() } ?: listOf()
