@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import coil.load
 import com.cinemate.cinemateapp.data.model.Movie
 import com.cinemate.cinemateapp.databinding.FragmentHomeBinding
+import com.cinemate.cinemateapp.presentation.detail.DetailFragment
 import com.cinemate.cinemateapp.presentation.home.adapters.movie.MovieAdapter
 import com.cinemate.cinemateapp.presentation.home.adapters.movie.OnItemClickedListener
 import com.cinemate.cinemateapp.presentation.more.MoreListActivity
@@ -75,9 +76,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun onItemClick(movie: Movie) {
-//        val intent = Intent(requireContext(), DetailActivity::class.java)
-//        intent.putExtra("EXTRAS", movie)
-//        startActivity(intent)
+        val intent = Intent(requireContext(), DetailFragment::class.java)
+        intent.putExtra("EXTRAS", movie)
+        startActivity(intent)
     }
 
     private fun bindDataMovie(movie: List<Movie>) {
