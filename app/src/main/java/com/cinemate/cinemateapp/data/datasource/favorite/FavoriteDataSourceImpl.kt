@@ -7,19 +7,14 @@ import kotlinx.coroutines.flow.Flow
 class FavoriteDataSourceImpl(
     private val dao: AppDao
 ): FavoriteDataSource {
-    override fun getAllFavorites(): Flow<List<AppEntity>> {
-        return dao.getAllFavorites()
-    }
 
-    override suspend fun insertFavorite(favorite: AppEntity): Long {
-        return dao.insertFavorite(favorite)
-    }
+    override fun getAllFavorites(): Flow<List<AppEntity>> = dao.getAllFavorites()
 
-    override suspend fun deleteFavorite(favorite: AppEntity): Int {
-        return dao.deleteFavorite(favorite)
-    }
+    override suspend fun insertFavorite(favorite: AppEntity): Long = dao.insertFavorite(favorite)
 
-    override fun deleteAll() {
-        return dao.deleteAll()
-    }
+    override suspend fun deleteFavorite(favorite: AppEntity): Int = dao.deleteFavorite(favorite)
+
+    override suspend fun deleteAll() = dao.deleteAll()
+
+
 }

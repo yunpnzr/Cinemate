@@ -4,57 +4,88 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.cinemate.cinemateapp.R
+import com.cinemate.cinemateapp.data.model.Favorite
+import com.cinemate.cinemateapp.databinding.FragmentFavoriteBinding
+import com.cinemate.cinemateapp.presentation.favorite.adapter.FavoriteListAdapter
+import com.cinemate.cinemateapp.presentation.favorite.adapter.FavoriteListener
+import com.cinemate.cinemateapp.utils.proceedWhen
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [FavoriteFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class FavoriteFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentFavoriteBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favorite, container, false)
+        binding = FragmentFavoriteBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FavoriteFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FavoriteFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        super.onViewCreated(view, savedInstanceState)
+        setupList()
+        observeData()
+        setClickListener()
+    }
+
+
+    private val ViewModel: FavoriteViewModel by viewModel()
+
+    private val adapter: FavoriteListAdapter by lazy {
+        FavoriteListAdapter(
+//            object : FavoriteListener {
+//                override fun onRemoveFaforiteClicked(item: Favorite) {
+//                    ViewModel.removeFavorite(item)
+//                }
+//            },
+        )
+    }
+
+    private fun setClickListener() {
+//      if have some button
+    }
+
+    private fun setupList() {
+            binding.rvFavorite.itemAnimator = null
+            binding.rvFavorite.adapter = adapter
+    }
+
+
+    private fun observeData() {
+        ViewModel.getAllFavorites().observe(viewLifecycleOwner) {
+            it.proceedWhen(doOnSuccess = { result ->
+                binding.layoutState.root.isVisible = false
+                binding.layoutState.pbLoading.isVisible = false
+                binding.layoutState.tvError.isVisible = false
+                binding.rvFavorite.isVisible = true
+                result.payload?.let { (cart, totalPrice) ->
+                    adapter.submitData(cart)
                 }
-            }
+            }, doOnLoading = {
+                binding.layoutState.root.isVisible = true
+                binding.layoutState.pbLoading.isVisible = true
+                binding.layoutState.tvError.isVisible = false
+                binding.rvFavorite.isVisible = false
+            }, doOnError = { err ->
+                binding.layoutState.root.isVisible = true
+                binding.layoutState.pbLoading.isVisible = false
+                binding.layoutState.tvError.isVisible = true
+                binding.rvFavorite.isVisible = false
+            }, doOnEmpty = { data ->
+                binding.layoutState.root.isVisible = true
+                binding.layoutState.pbLoading.isVisible = false
+                binding.layoutState.tvError.isVisible = true
+                binding.rvFavorite.isVisible = false
+            })
+        }
     }
 }
