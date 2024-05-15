@@ -6,5 +6,6 @@ data class Favorite(
     var movieDate: String,
     var movieRating: Double,
     var movieDesc: String,
-    var movieImage: String
+    var movieImage: String,
+    var movieBool: Boolean
 )

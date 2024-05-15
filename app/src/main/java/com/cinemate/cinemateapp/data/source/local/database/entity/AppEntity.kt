@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "movies")
-data class AppEntity (
+data class AppEntity(
     @PrimaryKey
     @ColumnInfo("movie_id")
     var movieId: Int,
@@ -18,5 +18,7 @@ data class AppEntity (
     @ColumnInfo("movie_desc")
     var movieDesc: String,
     @ColumnInfo("movie_image")
-    var movieImage: String
+    var movieImage: String,
+    @ColumnInfo(name = "movie_bool")
+    var movieBool: Boolean,
 )
