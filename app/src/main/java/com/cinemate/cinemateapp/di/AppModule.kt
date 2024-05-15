@@ -12,8 +12,10 @@ import com.cinemate.cinemateapp.data.source.local.database.AppDatabase
 import com.cinemate.cinemateapp.data.source.local.database.dao.AppDao
 import com.cinemate.cinemateapp.data.source.network.service.AppService
 import com.cinemate.cinemateapp.presentation.main.MainViewModel
+import com.cinemate.cinemateapp.presentation.home.HomeViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
@@ -48,6 +50,7 @@ object AppModule {
     }
     private val viewModelModule = module {
         viewModel { MainViewModel(get(), get()) }
+        viewModelOf(::HomeViewModel)
     }
 
     val modules = listOf<Module>(
