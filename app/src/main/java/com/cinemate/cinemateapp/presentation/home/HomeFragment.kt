@@ -1,6 +1,5 @@
 package com.cinemate.cinemateapp.presentation.home
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,6 +12,7 @@ import com.cinemate.cinemateapp.data.model.Movie
 import com.cinemate.cinemateapp.databinding.FragmentHomeBinding
 import com.cinemate.cinemateapp.presentation.home.adapters.movie.MovieAdapter
 import com.cinemate.cinemateapp.presentation.home.adapters.movie.OnItemClickedListener
+import com.cinemate.cinemateapp.presentation.more.MoreListActivity
 import com.cinemate.cinemateapp.utils.proceedWhen
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -54,15 +54,24 @@ class HomeFragment : Fragment() {
 
         }
         binding.ivMoreNowPlaying.setOnClickListener {
-
+            navigateToMoreListActivity(MoreListActivity.TYPE_NOW_PLAYING)
         }
         binding.ivMorePopular.setOnClickListener {
-
+            navigateToMoreListActivity(MoreListActivity.TYPE_POPULAR)
         }
         binding.ivMoreUpcomingMovies.setOnClickListener {
-
+            navigateToMoreListActivity(MoreListActivity.TYPE_UPCOMING)
         }
-        binding.ivMoreTopRated
+        binding.ivMoreTopRated.setOnClickListener {
+            navigateToMoreListActivity(MoreListActivity.TYPE_TOP_RATED)
+        }
+    }
+
+    private fun navigateToMoreListActivity(movieType: String) {
+        val intent = Intent(requireContext(), MoreListActivity::class.java).apply {
+            putExtra(MoreListActivity.MOVIE_TYPE, movieType)
+        }
+        startActivity(intent)
     }
 
     private fun onItemClick(movie: Movie) {

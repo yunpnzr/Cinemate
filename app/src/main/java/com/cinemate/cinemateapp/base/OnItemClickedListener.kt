@@ -1,5 +1,5 @@
 package com.cinemate.cinemateapp.base
 
-interface OnItemClickedListener<T> {
+interface OnItemClickListener<T> {
     fun onClicked(item: T)
 }
