@@ -11,6 +11,7 @@ import com.cinemate.cinemateapp.data.repository.movie.MovieRepositoryImpl
 import com.cinemate.cinemateapp.data.source.local.database.AppDatabase
 import com.cinemate.cinemateapp.data.source.local.database.dao.AppDao
 import com.cinemate.cinemateapp.data.source.network.service.AppService
+import com.cinemate.cinemateapp.presentation.favorite.FavoriteViewModel
 import com.cinemate.cinemateapp.presentation.main.MainViewModel
 import com.cinemate.cinemateapp.presentation.home.HomeViewModel
 import org.koin.android.ext.koin.androidContext
@@ -47,10 +48,12 @@ object AppModule {
         single<DetailMovieRepository> {
             DetailMovieRepositoryImpl(get())
         }
+
     }
     private val viewModelModule = module {
         viewModel { MainViewModel(get(), get()) }
         viewModelOf(::HomeViewModel)
+        viewModel { FavoriteViewModel(get()) }
     }
 
     val modules = listOf<Module>(

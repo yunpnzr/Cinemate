@@ -89,14 +89,15 @@ class FavoriteViewHolder(
     }
 
     private fun setClickListeners(item: Favorite) {
+        // ntar buat close dari layout favorite nya
 //        with(binding) {
-//            ivRemoveFavorite.setOnClickListener { favoriteListener?.onRemoveCartClicked(item) }
+//            ivRemoveFavorite.setOnClickListener { favoriteListener?.onRemoveFavoriteClicked(item) }
 //        }
     }
 }
 
 interface FavoriteListener {
-    fun onRemoveCartClicked(cart: Favorite)
+    fun onRemoveFavoriteClicked(item: Favorite)
 }
 
 interface ViewHolderBinder<T> {
