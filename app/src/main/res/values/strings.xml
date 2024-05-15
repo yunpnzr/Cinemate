@@ -10,4 +10,5 @@
     <string name="text_popular">Popular</string>
     <string name="text_upcoming_movies">Upcoming Movies</string>
     <string name="text_top_rated">Top Rated</string>
+    <string name="title_list_favorite">My List</string>
 </resources>
