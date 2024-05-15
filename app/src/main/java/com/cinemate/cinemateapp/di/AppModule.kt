@@ -2,6 +2,8 @@ package com.cinemate.cinemateapp.di
 
 import com.cinemate.cinemateapp.data.datasource.detail.DetailDataSource
 import com.cinemate.cinemateapp.data.datasource.detail.DetailDataSourceImpl
+import com.cinemate.cinemateapp.data.datasource.favorite.FavoriteDataSource
+import com.cinemate.cinemateapp.data.datasource.favorite.FavoriteDataSourceImpl
 import com.cinemate.cinemateapp.data.datasource.movie.MovieDataSource
 import com.cinemate.cinemateapp.data.datasource.movie.MovieDataSourceImpl
 import com.cinemate.cinemateapp.data.repository.detail.DetailMovieRepository
@@ -11,8 +13,9 @@ import com.cinemate.cinemateapp.data.repository.movie.MovieRepositoryImpl
 import com.cinemate.cinemateapp.data.source.local.database.AppDatabase
 import com.cinemate.cinemateapp.data.source.local.database.dao.AppDao
 import com.cinemate.cinemateapp.data.source.network.service.AppService
-import com.cinemate.cinemateapp.presentation.main.MainViewModel
 import com.cinemate.cinemateapp.presentation.home.HomeViewModel
+import com.cinemate.cinemateapp.presentation.main.MainViewModel
+import com.cinemate.cinemateapp.presentation.more.MoreListViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.androidx.viewmodel.dsl.viewModelOf
@@ -39,6 +42,9 @@ object AppModule {
         single<DetailDataSource> {
             DetailDataSourceImpl(get())
         }
+        single<FavoriteDataSource> {
+            FavoriteDataSourceImpl(get())
+        }
     }
     private val repositoryModule = module {
         single<MovieRepository> {
@@ -51,6 +57,7 @@ object AppModule {
     private val viewModelModule = module {
         viewModel { MainViewModel(get(), get()) }
         viewModelOf(::HomeViewModel)
+        viewModelOf(::MoreListViewModel)
     }
 
     val modules = listOf<Module>(
