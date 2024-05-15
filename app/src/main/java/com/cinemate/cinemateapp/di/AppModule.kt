@@ -2,10 +2,14 @@ package com.cinemate.cinemateapp.di
 
 import com.cinemate.cinemateapp.data.datasource.detail.DetailDataSource
 import com.cinemate.cinemateapp.data.datasource.detail.DetailDataSourceImpl
+import com.cinemate.cinemateapp.data.datasource.favorite.FavoriteDataSource
+import com.cinemate.cinemateapp.data.datasource.favorite.FavoriteDataSourceImpl
 import com.cinemate.cinemateapp.data.datasource.movie.MovieDataSource
 import com.cinemate.cinemateapp.data.datasource.movie.MovieDataSourceImpl
 import com.cinemate.cinemateapp.data.repository.detail.DetailMovieRepository
 import com.cinemate.cinemateapp.data.repository.detail.DetailMovieRepositoryImpl
+import com.cinemate.cinemateapp.data.repository.favorite.FavoriteRepository
+import com.cinemate.cinemateapp.data.repository.favorite.FavoriteRepositoryImpl
 import com.cinemate.cinemateapp.data.repository.movie.MovieRepository
 import com.cinemate.cinemateapp.data.repository.movie.MovieRepositoryImpl
 import com.cinemate.cinemateapp.data.source.local.database.AppDatabase
@@ -40,6 +44,9 @@ object AppModule {
         single<DetailDataSource> {
             DetailDataSourceImpl(get())
         }
+        single<FavoriteDataSource> {
+            FavoriteDataSourceImpl(get())
+        }
     }
     private val repositoryModule = module {
         single<MovieRepository> {
@@ -48,7 +55,9 @@ object AppModule {
         single<DetailMovieRepository> {
             DetailMovieRepositoryImpl(get())
         }
-
+        single<FavoriteRepository> {
+            FavoriteRepositoryImpl(get())
+        }
     }
     private val viewModelModule = module {
         viewModel { MainViewModel(get(), get()) }
