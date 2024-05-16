@@ -21,25 +21,25 @@ interface AppService {
     @Headers("Authorization: Bearer ${BuildConfig.KEY}")
     @GET("now_playing")
     suspend fun nowPlaying(
-        @Query("page") page: Int
+        @Query("page") page: Int? = null
     ): NowPlayingResponse
 
     @Headers("Authorization: Bearer ${BuildConfig.KEY}")
     @GET("popular")
     suspend fun popular(
-        @Query("page") page: Int
+        @Query("page") page: Int? = null
     ): PopularMovieResponse
 
     @Headers("Authorization: Bearer ${BuildConfig.KEY}")
     @GET("top_rated")
     suspend fun topRated(
-        @Query("page") page: Int
+        @Query("page") page: Int? = null
     ): TopRatedResponse
 
     @Headers("Authorization: Bearer ${BuildConfig.KEY}")
     @GET("upcoming")
     suspend fun upcoming(
-        @Query("page") page: Int
+        @Query("page") page: Int? = null
     ): UpcomingMovieResponse
 
     @Headers("Authorization: Bearer ${BuildConfig.KEY}")
