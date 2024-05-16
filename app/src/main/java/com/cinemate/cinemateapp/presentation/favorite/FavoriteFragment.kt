@@ -8,7 +8,9 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.cinemate.cinemateapp.R
 import com.cinemate.cinemateapp.data.model.Favorite
+import com.cinemate.cinemateapp.data.model.Movie
 import com.cinemate.cinemateapp.databinding.FragmentFavoriteBinding
+import com.cinemate.cinemateapp.presentation.detail.DetailFragment
 import com.cinemate.cinemateapp.presentation.favorite.adapter.FavoriteListAdapter
 import com.cinemate.cinemateapp.presentation.favorite.adapter.FavoriteListener
 import com.cinemate.cinemateapp.utils.proceedWhen
@@ -17,6 +19,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FavoriteFragment : Fragment() {
     private lateinit var binding: FragmentFavoriteBinding
+    private lateinit var favoriteShowDetailAdapter: FavoriteListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,8 +53,18 @@ class FavoriteFragment : Fragment() {
         )
     }
 
+    private fun onItemClick(movie: Movie) {
+        val detailFragment = DetailFragment().apply {
+            arguments = Bundle().apply {
+                putParcelable(DetailFragment.EXTRAS_MOVIE, movie)
+            }
+        }
+
+        detailFragment.show(parentFragmentManager, DetailFragment::class.java.simpleName)
+    }
+
     private fun setClickListener() {
-//      if have some button
+
     }
 
     private fun setupList() {
@@ -62,12 +75,13 @@ class FavoriteFragment : Fragment() {
 
     private fun observeData() {
         ViewModel.getAllFavorites().observe(viewLifecycleOwner) {
+
             it.proceedWhen(doOnSuccess = { result ->
                 binding.layoutState.root.isVisible = false
                 binding.layoutState.pbLoading.isVisible = false
                 binding.layoutState.tvError.isVisible = false
                 binding.rvFavorite.isVisible = true
-                result.payload?.let { (cart, totalPrice) ->
+                result.payload?.let { (cart) ->
                     adapter.submitData(cart)
                 }
             }, doOnLoading = {

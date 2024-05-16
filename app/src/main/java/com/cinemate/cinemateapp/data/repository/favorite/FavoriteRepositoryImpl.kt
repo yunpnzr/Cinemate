@@ -4,6 +4,7 @@ import com.cinemate.cinemateapp.data.datasource.favorite.FavoriteDataSource
 import com.cinemate.cinemateapp.data.mapper.toAppEntity
 import com.cinemate.cinemateapp.data.mapper.toFavoriteList
 import com.cinemate.cinemateapp.data.model.Favorite
+import com.cinemate.cinemateapp.data.model.Movie
 import com.cinemate.cinemateapp.data.model.MovieDetail
 import com.cinemate.cinemateapp.data.source.local.database.entity.AppEntity
 import com.cinemate.cinemateapp.utils.ResultWrapper
@@ -48,7 +49,7 @@ class FavoriteRepositoryImpl(private val dataSource: FavoriteDataSource): Favori
             }
     }
 
-    override fun createFavorite(item: MovieDetail): Flow<ResultWrapper<Boolean>> {
+    override fun createFavorite(item: Movie): Flow<ResultWrapper<Boolean>> {
         return item.id?.let { itemId ->
             // when id is not null
             proceedFlow {

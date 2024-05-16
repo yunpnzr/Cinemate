@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import coil.load
+import com.cinemate.cinemateapp.R
 import com.cinemate.cinemateapp.data.model.Movie
 import com.cinemate.cinemateapp.data.model.MovieDetail
 import com.cinemate.cinemateapp.databinding.FragmentDetailBinding
@@ -43,6 +45,38 @@ class DetailFragment : BottomSheetDialogFragment() {
             currentBannerMovie?.let { movie ->
                 shareMovie(movie)
             }
+        }
+        binding.btnMyList.setOnClickListener {
+            addMovieToFavorite()
+        }
+    }
+
+    private fun addMovieToFavorite() {
+        viewModel.addToFavorite().observe(this) {
+            it.proceedWhen(
+                doOnSuccess = {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.text_succes_add_to_favorite),
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                },
+                doOnError = {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.text_faliled_add_to_favorite),
+                        Toast.LENGTH_SHORT,
+                    )
+                        .show()
+                },
+                doOnLoading = {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.text_load_add_to_favorite),
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                },
+            )
         }
     }
 

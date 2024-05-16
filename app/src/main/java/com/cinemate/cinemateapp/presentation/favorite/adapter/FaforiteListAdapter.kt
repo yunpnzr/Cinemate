@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.cinemate.cinemateapp.data.model.Favorite
-import com.cinemate.cinemateapp.databinding.ItemFavoriteBinding
+import com.cinemate.cinemateapp.data.model.Movie
+import com.cinemate.cinemateapp.databinding.ItemMovieBinding
+import com.cinemate.cinemateapp.presentation.home.adapters.movie.MovieAdapter
 
 
 class FavoriteListAdapter(private val favoriteListener: FavoriteListener? = null) :
@@ -32,6 +34,7 @@ class FavoriteListAdapter(private val favoriteListener: FavoriteListener? = null
             },
         )
 
+
     fun submitData(data: List<Favorite>) {
         dataDiffer.submitList(data)
     }
@@ -42,7 +45,7 @@ class FavoriteListAdapter(private val favoriteListener: FavoriteListener? = null
     ): RecyclerView.ViewHolder {
         return if (favoriteListener != null) {
             FavoriteViewHolder(
-                ItemFavoriteBinding.inflate(
+                ItemMovieBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false,
@@ -51,7 +54,7 @@ class FavoriteListAdapter(private val favoriteListener: FavoriteListener? = null
             )
         } else {
             FavoriteViewHolder(
-                ItemFavoriteBinding.inflate(
+                ItemMovieBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false,
@@ -72,7 +75,7 @@ class FavoriteListAdapter(private val favoriteListener: FavoriteListener? = null
 }
 
 class FavoriteViewHolder(
-    private val binding: ItemFavoriteBinding,
+    private val binding: ItemMovieBinding,
     private val favoriteListener: FavoriteListener?,
 ) : RecyclerView.ViewHolder(binding.root), ViewHolderBinder<Favorite> {
     override fun bind(item: Favorite) {
@@ -82,7 +85,7 @@ class FavoriteViewHolder(
 
     private fun setCartData(item: Favorite) {
         with(binding) {
-            binding.ivImgItemFavorite.load(item.movieImage) {
+            binding.ivMovieImage.load("https://image.tmdb.org/t/p/w500/${item.movieImage}") {
                 crossfade(true)
             }
         }
