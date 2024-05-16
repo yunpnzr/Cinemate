@@ -7,12 +7,18 @@ import com.cinemate.cinemateapp.data.datasource.favorite.FavoriteDataSource
 import com.cinemate.cinemateapp.data.datasource.favorite.FavoriteDataSourceImpl
 import com.cinemate.cinemateapp.data.datasource.movie.MovieDataSource
 import com.cinemate.cinemateapp.data.datasource.movie.MovieDataSourceImpl
+import com.cinemate.cinemateapp.data.datasource.seemore.playnow.PlayNowPagingSource
+import com.cinemate.cinemateapp.data.datasource.seemore.popular.PopularPagingSource
+import com.cinemate.cinemateapp.data.datasource.seemore.toprated.TopRatedPagingSource
+import com.cinemate.cinemateapp.data.datasource.seemore.upcoming.UpcomingPagingSource
 import com.cinemate.cinemateapp.data.repository.detail.DetailMovieRepository
 import com.cinemate.cinemateapp.data.repository.detail.DetailMovieRepositoryImpl
 import com.cinemate.cinemateapp.data.repository.favorite.FavoriteRepository
 import com.cinemate.cinemateapp.data.repository.favorite.FavoriteRepositoryImpl
 import com.cinemate.cinemateapp.data.repository.movie.MovieRepository
 import com.cinemate.cinemateapp.data.repository.movie.MovieRepositoryImpl
+import com.cinemate.cinemateapp.data.repository.seemore.SeeMoreRepository
+import com.cinemate.cinemateapp.data.repository.seemore.SeeMoreRepositoryImpl
 import com.cinemate.cinemateapp.data.source.local.database.AppDatabase
 import com.cinemate.cinemateapp.data.source.local.database.dao.AppDao
 import com.cinemate.cinemateapp.data.source.network.service.AppService
@@ -50,6 +56,18 @@ object AppModule {
         single<FavoriteDataSource> {
             FavoriteDataSourceImpl(get())
         }
+        single<PlayNowPagingSource> {
+            PlayNowPagingSource(get())
+        }
+        single<PopularPagingSource> {
+            PopularPagingSource(get())
+        }
+        single<TopRatedPagingSource> {
+            TopRatedPagingSource(get())
+        }
+        single<UpcomingPagingSource> {
+            UpcomingPagingSource(get())
+        }
     }
     private val repositoryModule = module {
         single<MovieRepository> {
@@ -60,6 +78,9 @@ object AppModule {
         }
         single<FavoriteRepository> {
             FavoriteRepositoryImpl(get())
+        }
+        single<SeeMoreRepository> {
+            SeeMoreRepositoryImpl(get())
         }
     }
     private val viewModelModule = module {

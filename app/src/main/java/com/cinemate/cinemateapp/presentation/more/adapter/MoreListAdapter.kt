@@ -2,7 +2,7 @@ package com.cinemate.cinemateapp.presentation.more.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -12,44 +12,37 @@ import com.cinemate.cinemateapp.databinding.ItemMovieListBinding
 
 class MoreListAdapter(
     private val listener: OnItemClickListener<Movie>
-): RecyclerView.Adapter<MoreListAdapter.MoreListViewHolder>() {
+): PagingDataAdapter<Movie, MoreListAdapter.MoreListViewHolder>(DIFF_CALLBACK) {
 
     private val data = mutableListOf<Movie>()
 
-    private val asyncDataDiffer =
-        AsyncListDiffer<Movie>(
-            this,
-            object : DiffUtil.ItemCallback<Movie>() {
-                override fun areItemsTheSame(
-                    oldItem: Movie,
-                    newItem: Movie,
-                ): Boolean {
-                    return oldItem.id == newItem.id
-                }
+    companion object{
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Movie>() {
+            override fun areItemsTheSame(
+                oldItem: Movie,
+                newItem: Movie
+            ): Boolean {
+                return oldItem.id == newItem.id
+            }
 
-                override fun areContentsTheSame(
-                    oldItem: Movie,
-                    newItem: Movie,
-                ): Boolean {
-                    return oldItem.hashCode() == newItem.hashCode()
-                }
-            },
-        )
-
-    fun submitData(data: List<Movie>) {
-        asyncDataDiffer.submitList(data)
+            override fun areContentsTheSame(
+                oldItem: Movie,
+                newItem: Movie
+            ): Boolean {
+                return oldItem == newItem
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoreListViewHolder {
         return MoreListViewHolder(ItemMovieListBinding.inflate(LayoutInflater.from(parent.context), parent, false), listener)
     }
 
-    override fun getItemCount(): Int {
-        return asyncDataDiffer.currentList.size
-    }
-
     override fun onBindViewHolder(holder: MoreListViewHolder, position: Int) {
-        holder.bind(asyncDataDiffer.currentList[position])
+        val item = getItem(position)
+        if (item != null) {
+            holder.bind(item)
+        }
     }
 
     inner class MoreListViewHolder(
