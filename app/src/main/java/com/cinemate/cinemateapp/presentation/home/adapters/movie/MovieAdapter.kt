@@ -35,6 +35,10 @@ class MovieAdapter(
             },
         )
 
+    fun getCurrentList(): List<Movie> {
+        return asyncDataDiffer.currentList
+    }
+
     fun submitData(data: List<Movie>) {
         asyncDataDiffer.submitList(data)
     }
