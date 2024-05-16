@@ -24,6 +24,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val homeViewModel: HomeViewModel by viewModel()
+    private var currentBannerMovie: Movie? = null
     private lateinit var nowPlayingAdapter: MovieAdapter
     private lateinit var popularAdapter: MovieAdapter
     private lateinit var upcomingAdapter: MovieAdapter
@@ -63,12 +64,30 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun shareMovie(movie: Movie) {
+        val shareIntent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_SUBJECT, "Check out this movie!")
+            putExtra(Intent.EXTRA_TEXT, "Title: ${movie.title}\n\nDescription: ${movie.desc}")
+        }
+        startActivity(Intent.createChooser(shareIntent, "Share movie via"))
+    }
+
     private fun setClickAction() {
         binding.layoutBanner.btnInfo.setOnClickListener {
+            val randomMovie = currentBannerMovie
 
+            randomMovie?.let {
+                val bottomSheetFragment = DetailFragment().apply {
+                    arguments = Bundle().apply {
+                        putParcelable(DetailFragment.EXTRAS_MOVIE, it)
+                    }
+                }
+                bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
+            }
         }
         binding.layoutBanner.btnShare.setOnClickListener {
-
+            currentBannerMovie?.let { movie -> shareMovie(movie)}
         }
         binding.ivMoreNowPlaying.setOnClickListener {
             navigateToMoreListActivity(MoreListActivity.TYPE_NOW_PLAYING)
@@ -104,6 +123,8 @@ class HomeFragment : Fragment() {
     private fun bindDataMovie(movie: List<Movie>) {
         val randomMovieIndex = movie.indices.random()
         val randomMovie = movie[randomMovieIndex]
+
+        currentBannerMovie = randomMovie
 
         binding.layoutBanner.tvMovieTittle.text = randomMovie.title
         binding.layoutBanner.tvMovieDescription.text = randomMovie.desc
