@@ -1,5 +1,6 @@
 package com.cinemate.cinemateapp.presentation.detail
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +18,7 @@ import org.koin.core.parameter.parametersOf
 class DetailFragment : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentDetailBinding
-
+    private var currentBannerMovie: MovieDetail? = null
     private val viewModel: DetailViewModel by viewModel {
         parametersOf(arguments)
     }
@@ -34,6 +35,23 @@ class DetailFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         observeData()
+        setClickAction()
+    }
+
+    private fun setClickAction() {
+        binding.btnShare.setOnClickListener {
+            currentBannerMovie?.let { movie ->
+                shareMovie(movie)
+            }
+        }
+    }
+
+    private fun shareMovie(movie: MovieDetail?) {
+        val shareIntent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, "Watch this movie! ${movie?.title}\nhttps://image.tmdb.org/t/p/w500/${movie?.image}")
+        }
+        startActivity(Intent.createChooser(shareIntent, "Share movie via"))
     }
 
     private fun observeData() {
@@ -42,6 +60,7 @@ class DetailFragment : BottomSheetDialogFragment() {
                 result.proceedWhen(
                     doOnSuccess = { success ->
                         success.payload.let {movDetail ->
+                            currentBannerMovie = movDetail
                             setBind(movDetail)
                         }
                     }
