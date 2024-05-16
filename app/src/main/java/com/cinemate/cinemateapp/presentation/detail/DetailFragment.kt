@@ -37,7 +37,7 @@ class DetailFragment : BottomSheetDialogFragment() {
 
     private fun observeData() {
         viewModel.movie?.id.let {
-            viewModel.getDetail(it).observe(viewLifecycleOwner) {result ->
+            viewModel.getDetail(it!!).observe(viewLifecycleOwner) {result ->
                 result.proceedWhen(
                     doOnSuccess = { success ->
                         success.payload.let {movDetail ->

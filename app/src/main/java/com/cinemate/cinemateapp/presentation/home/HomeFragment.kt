@@ -101,7 +101,7 @@ class HomeFragment : Fragment() {
             }
         }
 
-        DetailFragment().show(parentFragmentManager, DetailFragment::class.java.simpleName)
+        detailFragment.show(parentFragmentManager, DetailFragment::class.java.simpleName)
     }
 
     private fun bindDataMovie(movie: List<Movie>) {
