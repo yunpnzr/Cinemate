@@ -7,6 +7,7 @@ import com.cinemate.cinemateapp.R
 import com.cinemate.cinemateapp.base.OnItemClickListener
 import com.cinemate.cinemateapp.data.model.Movie
 import com.cinemate.cinemateapp.databinding.ActivityMoreListBinding
+import com.cinemate.cinemateapp.presentation.detail.DetailFragment
 import com.cinemate.cinemateapp.presentation.more.adapter.MoreListAdapter
 import com.cinemate.cinemateapp.utils.ResultWrapper
 import com.cinemate.cinemateapp.utils.proceedWhen
@@ -34,9 +35,12 @@ class MoreListActivity : AppCompatActivity() {
 
     private fun setAppBar() {
         setSupportActionBar(binding.toolbarMoreList)
-        supportActionBar?.let {actionBar ->
-            actionBar.setDisplayHomeAsUpEnabled(true)
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_back_white)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setHomeAsUpIndicator(R.drawable.ic_back_white)
+        }
+        binding.toolbarMoreList.setNavigationOnClickListener {
+            onBackPressed()
         }
     }
 
@@ -56,9 +60,13 @@ class MoreListActivity : AppCompatActivity() {
     }
 
     private fun onItemClick(item: Movie) {
-//        val intent = Intent(this, DetailFragment::class.java)
-//        intent.putExtra("EXTRAS", movie)
-//        startActivity(intent)
+        val detailFragment = DetailFragment().apply {
+            arguments = Bundle().apply {
+                putParcelable(DetailFragment.EXTRAS_MOVIE, item)
+            }
+        }
+
+        detailFragment.show(supportFragmentManager, DetailFragment::class.java.simpleName)
     }
 
     private fun getMoreListType() {

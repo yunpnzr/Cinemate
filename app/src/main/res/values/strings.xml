@@ -10,12 +10,15 @@
     <string name="text_popular">Popular</string>
     <string name="text_upcoming_movies">Upcoming Movies</string>
     <string name="text_top_rated">Top Rated</string>
-    <string name="title_list_favorite">My List</string>
-    <string name="error_content_state">maaf data sedang kosong</string>
     <string name="movie_description_image">movie</string>
     <string name="icon_rating">icon rating</string>
     <string name="now_playing_title">Now Playing!</string>
     <string name="popular_movies_title">Popular Movies</string>
     <string name="top_rated_movies_title">Top Rated Movies</string>
     <string name="upcoming_movies_title">Upcoming Movies</string>
+    <string name="title_list_favorite" >MyList</string>
+    <string name="error_content_state">Maaf data masih kosong</string>
+    <string name="description">This is description</string>
+    <string name="my_list">My List</string>
+    <string name="share">Share</string>
 </resources>

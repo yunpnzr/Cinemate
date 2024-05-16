@@ -35,8 +35,18 @@ class MovieAdapter(
             },
         )
 
+    fun getCurrentList(): List<Movie> {
+        return asyncDataDiffer.currentList
+    }
+
     fun submitData(data: List<Movie>) {
         asyncDataDiffer.submitList(data)
+    }
+
+    private var onMovieClickListener: ((Movie) -> Unit)? = null
+
+    fun setOnMovieClickListener(listener: (Movie) -> Unit) {
+        onMovieClickListener = listener
     }
 
     override fun onCreateViewHolder(

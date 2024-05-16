@@ -5,11 +5,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import coil.load
+import com.cinemate.cinemateapp.R
 import com.cinemate.cinemateapp.data.model.Movie
 import com.cinemate.cinemateapp.databinding.FragmentHomeBinding
+import com.cinemate.cinemateapp.presentation.detail.DetailFragment
 import com.cinemate.cinemateapp.presentation.home.adapters.movie.MovieAdapter
 import com.cinemate.cinemateapp.presentation.home.adapters.movie.OnItemClickedListener
 import com.cinemate.cinemateapp.presentation.more.MoreListActivity
@@ -19,6 +24,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val homeViewModel: HomeViewModel by viewModel()
+    private var currentBannerMovie: Movie? = null
     private lateinit var nowPlayingAdapter: MovieAdapter
     private lateinit var popularAdapter: MovieAdapter
     private lateinit var upcomingAdapter: MovieAdapter
@@ -44,14 +50,43 @@ class HomeFragment : Fragment() {
         observeMovieUpcomingData()
         observeTopRatedData()
         setClickAction()
+        nowPlayingAdapter.setOnMovieClickListener { movie ->
+            onItemClick(movie)
+        }
+        popularAdapter.setOnMovieClickListener { movie ->
+            onItemClick(movie)
+        }
+        upcomingAdapter.setOnMovieClickListener { movie ->
+            onItemClick(movie)
+        }
+        topRatedAdapter.setOnMovieClickListener { movie ->
+            onItemClick(movie)
+        }
+    }
+
+    private fun shareMovie(movie: Movie) {
+        val shareIntent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, "Watch this movie! ${movie.title}\nhttps://image.tmdb.org/t/p/w500/${movie.image}")
+        }
+        startActivity(Intent.createChooser(shareIntent, "Share movie via"))
     }
 
     private fun setClickAction() {
         binding.layoutBanner.btnInfo.setOnClickListener {
+            val randomMovie = currentBannerMovie
 
+            randomMovie?.let {
+                val bottomSheetFragment = DetailFragment().apply {
+                    arguments = Bundle().apply {
+                        putParcelable(DetailFragment.EXTRAS_MOVIE, it)
+                    }
+                }
+                bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
+            }
         }
         binding.layoutBanner.btnShare.setOnClickListener {
-
+            currentBannerMovie?.let { movie -> shareMovie(movie)}
         }
         binding.ivMoreNowPlaying.setOnClickListener {
             navigateToMoreListActivity(MoreListActivity.TYPE_NOW_PLAYING)
@@ -75,14 +110,20 @@ class HomeFragment : Fragment() {
     }
 
     private fun onItemClick(movie: Movie) {
-//        val intent = Intent(requireContext(), DetailActivity::class.java)
-//        intent.putExtra("EXTRAS", movie)
-//        startActivity(intent)
+        val detailFragment = DetailFragment().apply {
+            arguments = Bundle().apply {
+                putParcelable(DetailFragment.EXTRAS_MOVIE, movie)
+            }
+        }
+
+        detailFragment.show(parentFragmentManager, DetailFragment::class.java.simpleName)
     }
 
     private fun bindDataMovie(movie: List<Movie>) {
         val randomMovieIndex = movie.indices.random()
         val randomMovie = movie[randomMovieIndex]
+
+        currentBannerMovie = randomMovie
 
         binding.layoutBanner.tvMovieTittle.text = randomMovie.title
         binding.layoutBanner.tvMovieDescription.text = randomMovie.desc

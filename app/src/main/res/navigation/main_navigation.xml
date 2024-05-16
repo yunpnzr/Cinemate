@@ -9,10 +9,19 @@
         android:id="@+id/menu_tab_home"
         android:name="com.cinemate.cinemateapp.presentation.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_menu_tab_home_to_detailFragment"
+            app:destination="@id/detailFragment"
+            tools:layout="@layout/fragment_detail"/>
+    </fragment>
     <fragment
         android:id="@+id/menu_tab_favorite"
         android:name="com.cinemate.cinemateapp.presentation.favorite.FavoriteFragment"
         android:label="fragment_favorite"
         tools:layout="@layout/fragment_favorite" />
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.cinemate.cinemateapp.presentation.detail.DetailFragment"
+        android:label="DetailFragment" />
 </navigation>
