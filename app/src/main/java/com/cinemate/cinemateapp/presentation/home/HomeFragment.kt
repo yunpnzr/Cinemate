@@ -67,8 +67,7 @@ class HomeFragment : Fragment() {
     private fun shareMovie(movie: Movie) {
         val shareIntent = Intent(Intent.ACTION_SEND).apply {
             type = "text/plain"
-            putExtra(Intent.EXTRA_SUBJECT, "Check out this movie!")
-            putExtra(Intent.EXTRA_TEXT, "Title: ${movie.title}\n\nDescription: ${movie.desc}")
+            putExtra(Intent.EXTRA_TEXT, "Watch this movie! ${movie.title}\nhttps://image.tmdb.org/t/p/w500/${movie.image}")
         }
         startActivity(Intent.createChooser(shareIntent, "Share movie via"))
     }
