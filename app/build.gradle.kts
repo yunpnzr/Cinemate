@@ -102,6 +102,8 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.okhttp.interceptor)
 
+    implementation(libs.paging)
+
     implementation(libs.koin.android)
 
     androidTestImplementation(libs.mockk.android)

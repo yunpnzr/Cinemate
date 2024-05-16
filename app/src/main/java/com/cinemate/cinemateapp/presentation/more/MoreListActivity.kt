@@ -2,6 +2,7 @@ package com.cinemate.cinemateapp.presentation.more
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.GridLayoutManager
 import com.cinemate.cinemateapp.R
 import com.cinemate.cinemateapp.base.OnItemClickListener
@@ -9,8 +10,6 @@ import com.cinemate.cinemateapp.data.model.Movie
 import com.cinemate.cinemateapp.databinding.ActivityMoreListBinding
 import com.cinemate.cinemateapp.presentation.detail.DetailFragment
 import com.cinemate.cinemateapp.presentation.more.adapter.MoreListAdapter
-import com.cinemate.cinemateapp.utils.ResultWrapper
-import com.cinemate.cinemateapp.utils.proceedWhen
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MoreListActivity : AppCompatActivity() {
@@ -80,43 +79,33 @@ class MoreListActivity : AppCompatActivity() {
         when (movieType) {
             TYPE_NOW_PLAYING -> {
                 supportActionBar?.title = getString(R.string.now_playing_title)
-                viewModel.nowPlaying(1).observe(this) { result ->
+                viewModel.nowPlaying().observe(this) { result ->
                     resultMovies(result)
                 }
             }
             TYPE_POPULAR -> {
                 supportActionBar?.title = getString(R.string.popular_movies_title)
-                viewModel.getPopularMovie(1).observe(this) { result ->
+                viewModel.getPopularMovie().observe(this) { result ->
                     resultMovies(result)
                 }
             }
             TYPE_TOP_RATED -> {
                 supportActionBar?.title = getString(R.string.top_rated_movies_title)
-                viewModel.topRating(1).observe(this) { result ->
+                viewModel.topRating().observe(this) { result ->
                     resultMovies(result)
                 }
             }
             TYPE_UPCOMING -> {
                 supportActionBar?.title = getString(R.string.upcoming_movies_title)
-                viewModel.upcoming(1).observe(this) { result ->
+                viewModel.upcoming().observe(this) { result ->
                     resultMovies(result)
                 }
             }
         }
     }
 
-    private fun resultMovies(result: ResultWrapper<List<Movie>>) {
-        result.proceedWhen (
-            doOnSuccess = { it ->
-                it.payload?.let {
-                    setBindData(it)
-                }
-            }
-        )
-    }
-
-    private fun setBindData(data: List<Movie>) {
-        moreAdapter.submitData(data)
+    private fun resultMovies(result: PagingData<Movie>) {
+        moreAdapter.submitData(lifecycle,result)
     }
 
     companion object {
