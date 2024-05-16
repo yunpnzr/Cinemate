@@ -18,4 +18,6 @@
     <string name="popular_movies_title">Popular Movies</string>
     <string name="top_rated_movies_title">Top Rated Movies</string>
     <string name="upcoming_movies_title">Upcoming Movies</string>
+    <string name="title_list_favorite" >MyList</string>
+    <string name="error_content_state">Maaf data masih kosong</string>
 </resources>
