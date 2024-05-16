@@ -76,25 +76,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun onItemClick(movie: Movie) {
-        /*val intent = Intent(requireContext(), DetailFragment::class.java)
-        intent.putExtra(DetailFragment.EXTRAS_MOVIE, movie)
-        startActivity(intent)*/
-
-        /*val navController = findNavController()
-        val bundleFragmentDetail = bundleOf(Pair(DetailFragment.EXTRAS_MOVIE, movie))
-        navController.navigate(R.id.action_menu_tab_home_to_detailFragment, bundleFragmentDetail)*/
-
-        /*val detailFragment = DetailFragment().apply {
-            arguments = Bundle().apply {
-                putParcelable(DetailFragment.EXTRAS_MOVIE, movie)
-            }
-        }
-
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, detailFragment)
-            .addToBackStack(null)
-            .commit()*/
-
         val detailFragment = DetailFragment().apply {
             arguments = Bundle().apply {
                 putParcelable(DetailFragment.EXTRAS_MOVIE, movie)
