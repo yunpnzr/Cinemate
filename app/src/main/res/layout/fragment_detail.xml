@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/bg_banner"
     app:cardCornerRadius="14dp">
 
     <FrameLayout
@@ -18,10 +19,10 @@
             android:scaleType="centerCrop"
             tools:background="@tools:sample/backgrounds/scenic" />
 
-        <View
+        <!--<View
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_banner" />
+            android:background="@drawable/bg_banner" />-->
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -38,20 +39,21 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:background="@tools:sample/backgrounds/scenic" />
 
-                <TextView
-                    android:id="@+id/tv_tittle_movie"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="100dp"
-                    android:layout_marginStart="16dp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@id/iv_movie"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="@tools:sample/lorem" />
+            <TextView
+                android:id="@+id/tv_tittle_movie"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="100dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_movie"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@tools:sample/lorem" />
             <TextView
                 android:id="@+id/tv_movie_release"
                 android:layout_width="wrap_content"
@@ -89,38 +91,41 @@
 
             <TextView
                 android:id="@+id/tv_desc_movie"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:layout_marginEnd="20dp"
                 android:textSize="16sp"
                 android:textStyle="normal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/iv_movie"
-                tools:text="@string/description"/>
+                tools:text="@string/description" />
 
             <TextView
                 android:id="@+id/tv_my_list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/my_list"
+                android:textColor="@color/white"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:textColor="@color/white"
-                app:layout_constraintTop_toBottomOf="@id/btn_my_list"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/tv_share" />
+                android:layout_marginBottom="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/btn_my_list"
+                app:layout_constraintStart_toStartOf="@+id/btn_my_list"
+                app:layout_constraintTop_toBottomOf="@+id/btn_my_list" />
 
             <TextView
                 android:id="@+id/tv_share"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/share"
+                android:textColor="@color/white"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:textColor="@color/white"
-                app:layout_constraintTop_toBottomOf="@id/btn_share"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/tv_my_list"/>
+                app:layout_constraintEnd_toEndOf="@+id/btn_share"
+                app:layout_constraintStart_toStartOf="@+id/btn_share"
+                app:layout_constraintTop_toBottomOf="@+id/btn_share" />
 
 
             <Button
@@ -147,4 +152,5 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </FrameLayout>
+
 </androidx.cardview.widget.CardView>
