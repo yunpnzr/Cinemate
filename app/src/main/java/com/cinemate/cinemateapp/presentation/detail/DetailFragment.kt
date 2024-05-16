@@ -4,21 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import coil.load
 import com.cinemate.cinemateapp.data.model.MovieDetail
 import com.cinemate.cinemateapp.databinding.FragmentDetailBinding
 import com.cinemate.cinemateapp.utils.proceedWhen
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 
-class DetailFragment : Fragment() {
+class DetailFragment : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentDetailBinding
 
     private val viewModel: DetailViewModel by viewModel {
-        parametersOf(activity?.intent?.extras)
+        parametersOf(arguments)
     }
 
     override fun onCreateView(
@@ -37,7 +37,7 @@ class DetailFragment : Fragment() {
 
     private fun observeData() {
         viewModel.movie?.id.let {
-            viewModel.getDetail(it!!).observe(viewLifecycleOwner) {result ->
+            viewModel.getDetail(it).observe(viewLifecycleOwner) {result ->
                 result.proceedWhen(
                     doOnSuccess = { success ->
                         success.payload.let {movDetail ->

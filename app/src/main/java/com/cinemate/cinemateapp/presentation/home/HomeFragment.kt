@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import coil.load
 import com.cinemate.cinemateapp.data.model.Movie
 import com.cinemate.cinemateapp.databinding.FragmentHomeBinding
+import com.cinemate.cinemateapp.presentation.detail.DetailFragment
 import com.cinemate.cinemateapp.presentation.home.adapters.movie.MovieAdapter
 import com.cinemate.cinemateapp.presentation.home.adapters.movie.OnItemClickedListener
 import com.cinemate.cinemateapp.presentation.more.MoreListActivity
@@ -93,6 +94,14 @@ class HomeFragment : Fragment() {
             .replace(R.id.fragment_container, detailFragment)
             .addToBackStack(null)
             .commit()*/
+
+        val detailFragment = DetailFragment().apply {
+            arguments = Bundle().apply {
+                putParcelable(DetailFragment.EXTRAS_MOVIE, movie)
+            }
+        }
+
+        DetailFragment().show(parentFragmentManager, DetailFragment::class.java.simpleName)
     }
 
     private fun bindDataMovie(movie: List<Movie>) {

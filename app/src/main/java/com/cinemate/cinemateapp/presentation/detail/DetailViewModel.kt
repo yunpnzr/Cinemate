@@ -17,6 +17,12 @@ class DetailViewModel(
 
     val movie = extras?.getParcelable<Movie>(DetailFragment.EXTRAS_MOVIE)
 
+    /*private var movie: Movie? = null
+
+    fun setExtras(extras: Bundle) {
+        movie = extras.getParcelable(DetailFragment.EXTRAS_MOVIE)
+    }*/
+
     fun getDetail(id: Int): LiveData<ResultWrapper<MovieDetail>> {
         return detailMovieRepository.detailMovies(id).asLiveData(Dispatchers.IO)
     }

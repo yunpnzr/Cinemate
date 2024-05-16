@@ -1,156 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_banner"
-    app:cardCornerRadius="14dp">
+    android:layout_width="match_parent"
+    android:background="@drawable/bg_detail">
 
-    <FrameLayout
-        android:id="@+id/fl_detail"
+    <ImageView
+        android:id="@+id/iv_detail_movie"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="@tools:sample/backgrounds/scenic" />
 
-        <ImageView
-            android:id="@+id/iv_detail_movie"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            tools:background="@tools:sample/backgrounds/scenic" />
+    <ImageView
+        android:id="@+id/iv_movie"
+        android:layout_width="150dp"
+        android:layout_height="180dp"
+        android:layout_marginHorizontal="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_detail_movie"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_detail_movie"
+        tools:background="@tools:sample/backgrounds/scenic" />
 
-        <!--<View
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_banner" />-->
+    <TextView
+        android:id="@+id/tv_tittle_movie"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_movie"
+        app:layout_constraintTop_toBottomOf="@+id/iv_detail_movie"
+        tools:text="@tools:sample/lorem" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            android:layout_marginStart="14dp"
-            android:layout_marginEnd="8dp">
+    <TextView
+        android:id="@+id/tv_movie_release"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:textStyle="normal"
+        app:layout_constraintStart_toStartOf="@+id/tv_tittle_movie"
+        app:layout_constraintTop_toBottomOf="@+id/tv_tittle_movie"
+        tools:text="@tools:sample/lorem" />
 
-                <ImageView
-                    android:id="@+id/iv_movie"
-                    android:layout_width="150dp"
-                    android:layout_height="180dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:background="@tools:sample/backgrounds/scenic" />
+    <TextView
+        android:id="@+id/tv_movie_rate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:textStyle="normal"
+        android:layout_marginStart="4dp"
+        app:layout_constraintStart_toEndOf="@+id/tv_movie_release"
+        app:layout_constraintTop_toBottomOf="@+id/tv_tittle_movie"
+        tools:text="@tools:sample/lorem" />
 
-            <TextView
-                android:id="@+id/tv_tittle_movie"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="100dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/iv_movie"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="@tools:sample/lorem" />
-            <TextView
-                android:id="@+id/tv_movie_release"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:textColor="@color/white"
-                android:layout_marginTop="4dp"
-                android:textSize="12sp"
-                android:textStyle="normal"
-                app:layout_constraintStart_toEndOf="@id/iv_movie"
-                app:layout_constraintTop_toBottomOf="@id/tv_tittle_movie"
-                tools:text="@tools:sample/lorem" />
+    <ImageView
+        android:id="@+id/iv_star_rate"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/ic_star_rate"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_movie_rate"
+        app:layout_constraintStart_toEndOf="@+id/tv_movie_rate"
+        app:layout_constraintTop_toTopOf="@+id/tv_movie_rate" />
 
-            <TextView
-                android:id="@+id/tv_movie_rate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:layout_marginTop="4dp"
-                android:layout_marginStart="8dp"
-                android:textSize="12sp"
-                android:textStyle="normal"
-                app:layout_constraintStart_toEndOf="@id/tv_movie_release"
-                app:layout_constraintTop_toBottomOf="@id/tv_tittle_movie"
-                tools:text="@tools:sample/lorem" />
+    <TextView
+        android:id="@+id/tv_desc_movie"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textSize="16sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_movie"
+        android:layout_marginHorizontal="16dp"
+        tools:text="@string/description" />
 
-            <ImageView
-                android:id="@+id/iv_star_rate"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_marginTop="4dp"
-                app:layout_constraintStart_toEndOf="@id/tv_movie_rate"
-                app:layout_constraintTop_toBottomOf="@id/tv_tittle_movie"
-                android:src="@drawable/ic_star_rate"/>
+    <TextView
+        android:id="@+id/tv_my_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/my_list"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btn_my_list"
+        app:layout_constraintStart_toStartOf="@+id/btn_my_list"
+        app:layout_constraintTop_toBottomOf="@+id/btn_my_list" />
 
-            <TextView
-                android:id="@+id/tv_desc_movie"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textSize="16sp"
-                android:textStyle="normal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_movie"
-                tools:text="@string/description" />
-
-            <TextView
-                android:id="@+id/tv_my_list"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/my_list"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="4dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/btn_my_list"
-                app:layout_constraintStart_toStartOf="@+id/btn_my_list"
-                app:layout_constraintTop_toBottomOf="@+id/btn_my_list" />
-
-            <TextView
-                android:id="@+id/tv_share"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/share"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/btn_share"
-                app:layout_constraintStart_toStartOf="@+id/btn_share"
-                app:layout_constraintTop_toBottomOf="@+id/btn_share" />
+    <TextView
+        android:id="@+id/tv_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/share"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/btn_share"
+        app:layout_constraintStart_toStartOf="@+id/btn_share"
+        app:layout_constraintTop_toBottomOf="@+id/btn_share" />
 
 
-            <Button
-                android:id="@+id/btn_my_list"
-                android:layout_width="35dp"
-                android:layout_height="45dp"
-                android:layout_marginTop="16dp"
-                app:backgroundTint="#a0a0a0"
-                app:layout_constraintTop_toBottomOf="@id/tv_desc_movie"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/btn_share"/>
+    <Button
+        android:id="@+id/btn_my_list"
+        android:layout_width="35dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="16dp"
+        app:backgroundTint="#a0a0a0"
+        app:layout_constraintTop_toBottomOf="@id/tv_desc_movie"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btn_share"/>
 
 
-            <Button
-                android:id="@+id/btn_share"
-                android:layout_width="35dp"
-                android:layout_height="45dp"
-                android:layout_marginTop="16dp"
-                app:backgroundTint="#a0a0a0"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/btn_my_list"
-                app:layout_constraintTop_toBottomOf="@id/tv_desc_movie" />
+    <Button
+        android:id="@+id/btn_share"
+        android:layout_width="35dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="16dp"
+        app:backgroundTint="#a0a0a0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_my_list"
+        app:layout_constraintTop_toBottomOf="@id/tv_desc_movie" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </FrameLayout>
-
-</androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
