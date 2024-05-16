@@ -18,7 +18,6 @@ import com.cinemate.cinemateapp.data.source.network.service.AppService
 import com.cinemate.cinemateapp.presentation.favorite.FavoriteViewModel
 import com.cinemate.cinemateapp.presentation.main.MainViewModel
 import com.cinemate.cinemateapp.presentation.home.HomeViewModel
-import com.cinemate.cinemateapp.presentation.main.MainViewModel
 import com.cinemate.cinemateapp.presentation.more.MoreListViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
