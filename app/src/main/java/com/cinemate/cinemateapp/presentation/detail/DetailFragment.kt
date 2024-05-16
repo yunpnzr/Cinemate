@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import coil.load
+import com.cinemate.cinemateapp.data.model.Movie
 import com.cinemate.cinemateapp.data.model.MovieDetail
 import com.cinemate.cinemateapp.databinding.FragmentDetailBinding
 import com.cinemate.cinemateapp.utils.proceedWhen

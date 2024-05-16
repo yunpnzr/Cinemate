@@ -67,7 +67,7 @@ object AppModule {
         viewModelOf(::HomeViewModel)
         viewModel { FavoriteViewModel(get()) }
         viewModelOf(::MoreListViewModel)
-        //viewModelOf(::DetailViewModel)
+        viewModelOf(::DetailViewModel)
         viewModel { (extras: Bundle?) ->
             DetailViewModel(extras, get())
         }

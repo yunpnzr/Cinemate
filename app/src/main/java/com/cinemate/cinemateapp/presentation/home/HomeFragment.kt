@@ -5,9 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import coil.load
+import com.cinemate.cinemateapp.R
 import com.cinemate.cinemateapp.data.model.Movie
 import com.cinemate.cinemateapp.databinding.FragmentHomeBinding
 import com.cinemate.cinemateapp.presentation.detail.DetailFragment
@@ -45,6 +49,18 @@ class HomeFragment : Fragment() {
         observeMovieUpcomingData()
         observeTopRatedData()
         setClickAction()
+        nowPlayingAdapter.setOnMovieClickListener { movie ->
+            onItemClick(movie)
+        }
+        popularAdapter.setOnMovieClickListener { movie ->
+            onItemClick(movie)
+        }
+        upcomingAdapter.setOnMovieClickListener { movie ->
+            onItemClick(movie)
+        }
+        topRatedAdapter.setOnMovieClickListener { movie ->
+            onItemClick(movie)
+        }
     }
 
     private fun setClickAction() {

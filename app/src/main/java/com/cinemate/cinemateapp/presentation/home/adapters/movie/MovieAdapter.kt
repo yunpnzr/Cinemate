@@ -39,6 +39,12 @@ class MovieAdapter(
         asyncDataDiffer.submitList(data)
     }
 
+    private var onMovieClickListener: ((Movie) -> Unit)? = null
+
+    fun setOnMovieClickListener(listener: (Movie) -> Unit) {
+        onMovieClickListener = listener
+    }
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
