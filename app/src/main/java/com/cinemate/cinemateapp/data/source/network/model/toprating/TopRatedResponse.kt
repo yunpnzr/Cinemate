@@ -1,6 +1,5 @@
 package com.cinemate.cinemateapp.data.source.network.model.toprating
 
-
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
