@@ -24,12 +24,11 @@ class DetailViewModel(
         return detailMovieRepository.detailMovies(id).asLiveData(Dispatchers.IO)
     }
 
-    fun addToFavorite(app: AppEntity?): LiveData<ResultWrapper<Boolean>> {
-        return movie?.let {
-                favoriteRepository.createFavorite(it).asLiveData(Dispatchers.IO)
-
-        } ?: liveData { emit(ResultWrapper.Error(IllegalStateException("Catalog not found"))) }
+    fun getCoverPhoto(id: Int): LiveData<ResultWrapper<MovieDetail>> {
+        return detailMovieRepository.detailMovies(id).asLiveData(Dispatchers.IO)
     }
+
+    fun addToFavorite(data: Movie) = favoriteRepository.createFavorite(data).asLiveData(Dispatchers.IO)
 //    fun addToFavorite(data: Movie) = favoriteRepository.createFavorite(data).asLiveData(Dispatchers.IO)
 
     fun checkMovieList(favoriteId: Int?) = favoriteRepository.checkFavoriteById(favoriteId).asLiveData(Dispatchers.IO)

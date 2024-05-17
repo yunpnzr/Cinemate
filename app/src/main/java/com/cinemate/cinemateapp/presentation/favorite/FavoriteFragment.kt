@@ -1,5 +1,6 @@
 package com.cinemate.cinemateapp.presentation.favorite
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment
 import coil.load
 import com.cinemate.cinemateapp.R
 import com.cinemate.cinemateapp.data.model.Movie
+import com.cinemate.cinemateapp.data.model.MovieDetail
 import com.cinemate.cinemateapp.databinding.FragmentDetailBinding
 import com.cinemate.cinemateapp.databinding.FragmentFavoriteBinding
 import com.cinemate.cinemateapp.presentation.favorite.adapter.FavoriteListAdapter
@@ -124,14 +126,15 @@ class FavoriteFragment : Fragment() {
         ) { movieFavorite ->
             if (movieFavorite.isEmpty()) {
                 detailFragmentBinding.btnMyList.setImageResource(R.drawable.ic_add)
-                ClickaddToFavorite(data, detailFragmentBinding)
+                clickAddToFavorite(data, detailFragmentBinding)
             } else {
                 detailFragmentBinding.btnMyList.setImageResource(R.drawable.ic_check)
                 clickRemoveFavorite(data.id, detailFragmentBinding)
             }
+            clickAddToShare(data,detailFragmentBinding)
         }
     }
-    private fun ClickaddToFavorite(
+    private fun clickAddToFavorite(
         data: Movie,
         detailFragmentBinding: FragmentDetailBinding,
     ) {
@@ -195,6 +198,20 @@ class FavoriteFragment : Fragment() {
                     ).show()
                 },
             )
+        }
+    }
+
+
+    private fun clickAddToShare(
+        data: Movie,
+        detailFragmentBinding: FragmentDetailBinding,
+    ) {
+        detailFragmentBinding.btnShare.setOnClickListener {
+            val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                putExtra(Intent.EXTRA_TEXT, "Watch this movie! ${data.title}\nhttps://image.tmdb.org/t/p/w500/${data.image}")
+            }
+            startActivity(Intent.createChooser(shareIntent, "Share movie via"))
         }
     }
 
