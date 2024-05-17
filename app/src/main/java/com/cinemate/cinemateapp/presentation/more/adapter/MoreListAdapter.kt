@@ -11,34 +11,40 @@ import com.cinemate.cinemateapp.data.model.Movie
 import com.cinemate.cinemateapp.databinding.ItemMovieListBinding
 
 class MoreListAdapter(
-    private val listener: OnItemClickListener<Movie>
-): PagingDataAdapter<Movie, MoreListAdapter.MoreListViewHolder>(DIFF_CALLBACK) {
-
+    private val listener: OnItemClickListener<Movie>,
+) : PagingDataAdapter<Movie, MoreListAdapter.MoreListViewHolder>(DIFF_CALLBACK) {
     private val data = mutableListOf<Movie>()
 
-    companion object{
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Movie>() {
-            override fun areItemsTheSame(
-                oldItem: Movie,
-                newItem: Movie
-            ): Boolean {
-                return oldItem.id == newItem.id
-            }
+    companion object {
+        val DIFF_CALLBACK =
+            object : DiffUtil.ItemCallback<Movie>() {
+                override fun areItemsTheSame(
+                    oldItem: Movie,
+                    newItem: Movie,
+                ): Boolean {
+                    return oldItem.id == newItem.id
+                }
 
-            override fun areContentsTheSame(
-                oldItem: Movie,
-                newItem: Movie
-            ): Boolean {
-                return oldItem == newItem
+                override fun areContentsTheSame(
+                    oldItem: Movie,
+                    newItem: Movie,
+                ): Boolean {
+                    return oldItem == newItem
+                }
             }
-        }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoreListViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): MoreListViewHolder {
         return MoreListViewHolder(ItemMovieListBinding.inflate(LayoutInflater.from(parent.context), parent, false), listener)
     }
 
-    override fun onBindViewHolder(holder: MoreListViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: MoreListViewHolder,
+        position: Int,
+    ) {
         val item = getItem(position)
         if (item != null) {
             holder.bind(item)
@@ -47,9 +53,9 @@ class MoreListAdapter(
 
     inner class MoreListViewHolder(
         private val binding: ItemMovieListBinding,
-        private val listener: OnItemClickListener<Movie>
-    ): RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Movie){
+        private val listener: OnItemClickListener<Movie>,
+    ) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: Movie)  {
             binding.ivMovieListPopular.load("https://image.tmdb.org/t/p/w500/${item.image}") {
                 crossfade(true)
             }
@@ -59,5 +65,4 @@ class MoreListAdapter(
             }
         }
     }
-
 }

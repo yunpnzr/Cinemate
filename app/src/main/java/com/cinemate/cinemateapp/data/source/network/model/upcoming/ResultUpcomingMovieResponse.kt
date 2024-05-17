@@ -32,5 +32,5 @@ data class ResultUpcomingMovieResponse(
     @SerializedName("vote_average")
     var voteAverage: Double?,
     @SerializedName("vote_count")
-    var voteCount: Int?
+    var voteCount: Int?,
 )

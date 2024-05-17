@@ -11,14 +11,17 @@ import com.cinemate.cinemateapp.data.repository.movie.MovieRepository
 import com.cinemate.cinemateapp.utils.ResultWrapper
 import kotlinx.coroutines.Dispatchers
 
-class HomeViewModel (
+class HomeViewModel(
     private val movieRepository: MovieRepository,
     private val repo: FavoriteRepository,
-    private val detailMovieRepository: DetailMovieRepository
+    private val detailMovieRepository: DetailMovieRepository,
 ) : ViewModel() {
     fun getMovieNowPlaying() = movieRepository.getNowPlaying(page = 1).asLiveData(Dispatchers.IO)
+
     fun getMoviePopular() = movieRepository.getPopular(1).asLiveData(Dispatchers.IO)
+
     fun getMovieUpcoming() = movieRepository.getUpcoming(1).asLiveData(Dispatchers.IO)
+
     fun getMovieTopRating() = movieRepository.getTopRating(1).asLiveData(Dispatchers.IO)
 
     fun addToFavorite(data: Movie) = repo.createFavorite(data).asLiveData(Dispatchers.IO)

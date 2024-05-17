@@ -1,6 +1,5 @@
 package com.cinemate.cinemateapp.data.source.network.model.detail
 
-
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
@@ -13,5 +12,5 @@ data class BelongsToCollection(
     @SerializedName("name")
     var name: String?,
     @SerializedName("poster_path")
-    var posterPath: String?
+    var posterPath: String?,
 )

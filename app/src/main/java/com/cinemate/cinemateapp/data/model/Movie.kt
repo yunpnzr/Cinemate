@@ -10,5 +10,5 @@ data class Movie(
     var date: String,
     var rating: Double,
     var desc: String,
-    var image: String
-): Parcelable
+    var image: String,
+) : Parcelable

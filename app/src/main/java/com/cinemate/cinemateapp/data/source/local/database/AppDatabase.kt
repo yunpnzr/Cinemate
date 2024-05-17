@@ -12,7 +12,7 @@ import com.cinemate.cinemateapp.data.source.local.database.entity.AppEntity
     version = 3,
     exportSchema = false,
 )
-abstract class AppDatabase: RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
     abstract fun appDao(): AppDao
 
     companion object {

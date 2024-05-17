@@ -12,5 +12,5 @@ data class TopRatedResponse(
     @SerializedName("total_pages")
     var totalPages: Int?,
     @SerializedName("total_results")
-    var totalResults: Int?
+    var totalResults: Int?,
 )

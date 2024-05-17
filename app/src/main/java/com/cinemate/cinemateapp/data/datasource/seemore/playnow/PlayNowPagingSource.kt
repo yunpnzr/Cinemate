@@ -6,7 +6,7 @@ import com.cinemate.cinemateapp.data.mapper.toMovieNowPlayed
 import com.cinemate.cinemateapp.data.model.Movie
 import com.cinemate.cinemateapp.data.source.network.service.AppService
 
-class PlayNowPagingSource(private val service: AppService): PagingSource<Int, Movie>() {
+class PlayNowPagingSource(private val service: AppService) : PagingSource<Int, Movie>() {
     override fun getRefreshKey(state: PagingState<Int, Movie>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             val anchorPage = state.closestPageToPosition(anchorPosition)
@@ -22,7 +22,7 @@ class PlayNowPagingSource(private val service: AppService): PagingSource<Int, Mo
             LoadResult.Page(
                 data = response.results.toMovieNowPlayed() ?: emptyList(),
                 prevKey = if (page == 1) null else page - 1,
-                nextKey = if (response.results.isNullOrEmpty()) null else page + 1
+                nextKey = if (response.results.isNullOrEmpty()) null else page + 1,
             )
         } catch (exception: Exception) {
             LoadResult.Error(exception)

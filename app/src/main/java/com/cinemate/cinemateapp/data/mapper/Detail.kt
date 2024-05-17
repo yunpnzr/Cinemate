@@ -11,7 +11,7 @@ fun DetailMovieResponse?.toDetail() =
         rating = this?.voteAverage ?: 0.0,
         desc = this?.overview.orEmpty(),
         image = this?.posterPath.orEmpty(),
-        coverImage = this?.backdropPath.orEmpty()
+        coverImage = this?.backdropPath.orEmpty(),
     )
 
 fun Collection<DetailMovieResponse>?.toDetailMovie(): List<MovieDetail> = this?.map { it.toDetail() } ?: listOf()

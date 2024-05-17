@@ -25,7 +25,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -47,7 +47,7 @@ android {
             buildConfigField(
                 type = "String",
                 name = "KEY",
-                value = "\"eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjMTg5MGU5NWM0NTc5NzgwZjc0MzQ3ODk3ZmM1MmNjOCIsInN1YiI6IjY2NDIwYjRjN2IxOTUyOGY2MDVhNTgyMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.B1uahWkZX8Goo1Id-4J5_jPTKo-CTQAXYm1MD3Gai0E\""
+                value = "\"eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjMTg5MGU5NWM0NTc5NzgwZjc0MzQ3ODk3ZmM1MmNjOCIsInN1YiI6IjY2NDIwYjRjN2IxOTUyOGY2MDVhNTgyMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.B1uahWkZX8Goo1Id-4J5_jPTKo-CTQAXYm1MD3Gai0E\"",
             )
         }
         create("integration") {
@@ -59,7 +59,7 @@ android {
             buildConfigField(
                 type = "String",
                 name = "KEY",
-                value = "\"eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjMTg5MGU5NWM0NTc5NzgwZjc0MzQ3ODk3ZmM1MmNjOCIsInN1YiI6IjY2NDIwYjRjN2IxOTUyOGY2MDVhNTgyMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.B1uahWkZX8Goo1Id-4J5_jPTKo-CTQAXYm1MD3Gai0E\""
+                value = "\"eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjMTg5MGU5NWM0NTc5NzgwZjc0MzQ3ODk3ZmM1MmNjOCIsInN1YiI6IjY2NDIwYjRjN2IxOTUyOGY2MDVhNTgyMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.B1uahWkZX8Goo1Id-4J5_jPTKo-CTQAXYm1MD3Gai0E\"",
             )
         }
     }

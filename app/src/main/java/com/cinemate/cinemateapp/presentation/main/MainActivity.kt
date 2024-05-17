@@ -9,7 +9,6 @@ import com.cinemate.cinemateapp.databinding.ActivityMainBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
-
     private val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
@@ -21,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setUpBottomNav()
-        //tryConn()
+        // tryConn()
     }
 
     private fun setUpBottomNav() {

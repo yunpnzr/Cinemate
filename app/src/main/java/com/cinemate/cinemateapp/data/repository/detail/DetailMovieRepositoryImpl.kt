@@ -7,7 +7,7 @@ import com.cinemate.cinemateapp.utils.ResultWrapper
 import com.cinemate.cinemateapp.utils.proceedFlow
 import kotlinx.coroutines.flow.Flow
 
-class DetailMovieRepositoryImpl(private val dataSource: DetailDataSource): DetailMovieRepository {
+class DetailMovieRepositoryImpl(private val dataSource: DetailDataSource) : DetailMovieRepository {
     override fun detailMovies(movieId: Int): Flow<ResultWrapper<MovieDetail>> {
         return proceedFlow {
             dataSource.detailMovies(movieId).toDetail()

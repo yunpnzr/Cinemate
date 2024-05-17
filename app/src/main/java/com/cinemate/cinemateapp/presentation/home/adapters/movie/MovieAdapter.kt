@@ -86,7 +86,6 @@ class MovieAdapter(
             }
         }
     }
-
 }
 
 interface OnItemClickedListener<T> {
