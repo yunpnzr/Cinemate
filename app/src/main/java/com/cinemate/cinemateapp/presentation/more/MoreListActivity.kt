@@ -32,6 +32,7 @@ class MoreListActivity : AppCompatActivity() {
         setupAdapter()
     }
 
+
     private fun setAppBar() {
         setSupportActionBar(binding.toolbarMoreList)
         supportActionBar?.apply {
