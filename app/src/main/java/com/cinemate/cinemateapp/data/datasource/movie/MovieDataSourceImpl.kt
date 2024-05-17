@@ -6,7 +6,7 @@ import com.cinemate.cinemateapp.data.source.network.model.toprating.TopRatedResp
 import com.cinemate.cinemateapp.data.source.network.model.upcoming.UpcomingMovieResponse
 import com.cinemate.cinemateapp.data.source.network.service.AppService
 
-class MovieDataSourceImpl(private val service: AppService): MovieDataSource {
+class MovieDataSourceImpl(private val service: AppService) : MovieDataSource {
     override suspend fun getNowPlaying(page: Int): NowPlayingResponse {
         return service.nowPlaying(page)
     }

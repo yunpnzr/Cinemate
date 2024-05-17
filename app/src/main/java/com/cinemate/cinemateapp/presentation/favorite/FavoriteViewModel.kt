@@ -13,16 +13,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-
 class FavoriteViewModel(
     private val repo: FavoriteRepository,
-    private val detailMovieRepository: DetailMovieRepository
+    private val detailMovieRepository: DetailMovieRepository,
 ) : ViewModel() {
     fun getAllFavorites() = repo.getAllFavorite().asLiveData(Dispatchers.IO)
 
     fun removeFavorite(item: Movie) {
         viewModelScope.launch(Dispatchers.IO) { repo.deleteFavorite(item).collect() }
     }
+
     fun addToFavorite(data: Movie) = repo.createFavorite(data).asLiveData(Dispatchers.IO)
 
     fun checkMovieList(favoriteId: Int?) = repo.checkFavoriteById(favoriteId).asLiveData(Dispatchers.IO)
@@ -32,5 +32,4 @@ class FavoriteViewModel(
     fun getCoverPhoto(id: Int): LiveData<ResultWrapper<MovieDetail>> {
         return detailMovieRepository.detailMovies(id).asLiveData(Dispatchers.IO)
     }
-
 }

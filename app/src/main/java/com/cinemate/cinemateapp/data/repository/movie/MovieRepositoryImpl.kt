@@ -10,7 +10,7 @@ import com.cinemate.cinemateapp.utils.ResultWrapper
 import com.cinemate.cinemateapp.utils.proceedFlow
 import kotlinx.coroutines.flow.Flow
 
-class MovieRepositoryImpl(private val dataSource: MovieDataSource): MovieRepository {
+class MovieRepositoryImpl(private val dataSource: MovieDataSource) : MovieRepository {
     override fun getNowPlaying(page: Int): Flow<ResultWrapper<List<Movie>>> {
         return proceedFlow {
             dataSource.getNowPlaying(page).results.toMovieNowPlayed()

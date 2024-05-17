@@ -17,35 +17,34 @@ import retrofit2.http.Query
 import java.util.concurrent.TimeUnit
 
 interface AppService {
-
     @Headers("Authorization: Bearer ${BuildConfig.KEY}")
     @GET("now_playing")
     suspend fun nowPlaying(
-        @Query("page") page: Int? = null
+        @Query("page") page: Int? = null,
     ): NowPlayingResponse
 
     @Headers("Authorization: Bearer ${BuildConfig.KEY}")
     @GET("popular")
     suspend fun popular(
-        @Query("page") page: Int? = null
+        @Query("page") page: Int? = null,
     ): PopularMovieResponse
 
     @Headers("Authorization: Bearer ${BuildConfig.KEY}")
     @GET("top_rated")
     suspend fun topRated(
-        @Query("page") page: Int? = null
+        @Query("page") page: Int? = null,
     ): TopRatedResponse
 
     @Headers("Authorization: Bearer ${BuildConfig.KEY}")
     @GET("upcoming")
     suspend fun upcoming(
-        @Query("page") page: Int? = null
+        @Query("page") page: Int? = null,
     ): UpcomingMovieResponse
 
     @Headers("Authorization: Bearer ${BuildConfig.KEY}")
     @GET("{movie_id}")
     suspend fun detail(
-        @Path("movie_id") movieId: Int? = null
+        @Path("movie_id") movieId: Int? = null,
     ): DetailMovieResponse
 
     companion object {

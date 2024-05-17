@@ -12,20 +12,24 @@ import kotlinx.coroutines.Dispatchers
 
 class MainViewModel(
     private val movieRepository: MovieRepository,
-    private val detailMovieRepository: DetailMovieRepository
-): ViewModel() {
+    private val detailMovieRepository: DetailMovieRepository,
+) : ViewModel() {
     fun getNowPlaying(page: Int): LiveData<ResultWrapper<List<Movie>>> {
         return movieRepository.getNowPlaying(page).asLiveData(Dispatchers.IO)
     }
+
     fun getPopular(page: Int): LiveData<ResultWrapper<List<Movie>>> {
         return movieRepository.getPopular(page).asLiveData(Dispatchers.IO)
     }
+
     fun getTopRating(page: Int): LiveData<ResultWrapper<List<Movie>>> {
         return movieRepository.getTopRating(page).asLiveData(Dispatchers.IO)
     }
+
     fun getUpcoming(page: Int): LiveData<ResultWrapper<List<Movie>>> {
         return movieRepository.getUpcoming(page).asLiveData(Dispatchers.IO)
     }
+
     fun getDetailMovie(movieId: Int): LiveData<ResultWrapper<MovieDetail>> {
         return detailMovieRepository.detailMovies(movieId).asLiveData(Dispatchers.IO)
     }

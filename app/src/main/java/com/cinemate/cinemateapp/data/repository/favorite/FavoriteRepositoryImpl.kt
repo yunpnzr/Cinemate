@@ -14,20 +14,18 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import java.lang.IllegalStateException
 
-class FavoriteRepositoryImpl(private val dataSource: FavoriteDataSource): FavoriteRepository {
-
+class FavoriteRepositoryImpl(private val dataSource: FavoriteDataSource) : FavoriteRepository {
     override fun deleteFavorite(item: Movie): Flow<ResultWrapper<Boolean>> {
         return proceedFlow { dataSource.deleteFavorite(item.toAppEntity()) > 0 }
     }
+
     override fun checkFavoriteById(movieId: Int?): Flow<List<AppEntity>> {
         return dataSource.checkFavoriteById(movieId)
     }
 
-
     override fun removeFavoriteById(favoriteId: Int?): Flow<ResultWrapper<Boolean>> {
         return proceedFlow { dataSource.removeFavoriteById(favoriteId) > 0 }
     }
-
 
     override fun deleteAll(): Flow<ResultWrapper<Boolean>> {
         return proceedFlow {
@@ -42,7 +40,7 @@ class FavoriteRepositoryImpl(private val dataSource: FavoriteDataSource): Favori
                 // mapping into Favorite list and sum the total price
                 proceed {
                     val result = it.toFavoriteList()
-                    val totalPrice = result.sumOf { it.rating}
+                    val totalPrice = result.sumOf { it.rating }
                     Pair(result, totalPrice)
                 }
             }.map {
@@ -54,8 +52,6 @@ class FavoriteRepositoryImpl(private val dataSource: FavoriteDataSource): Favori
                 delay(300)
             }
     }
-
-
 
     override fun createFavorite(item: Movie): Flow<ResultWrapper<Boolean>> {
         return item.id?.let { itemId ->

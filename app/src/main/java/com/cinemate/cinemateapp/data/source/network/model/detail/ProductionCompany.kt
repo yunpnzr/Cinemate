@@ -12,5 +12,5 @@ data class ProductionCompany(
     @SerializedName("name")
     var name: String?,
     @SerializedName("origin_country")
-    var originCountry: String?
+    var originCountry: String?,
 )

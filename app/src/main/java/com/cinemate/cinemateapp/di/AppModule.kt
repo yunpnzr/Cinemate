@@ -34,71 +34,76 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 
 object AppModule {
-    private val localModule = module {
-        single<AppDatabase> {
-            AppDatabase.createInstance(androidContext())
+    private val localModule =
+        module {
+            single<AppDatabase> {
+                AppDatabase.createInstance(androidContext())
+            }
+            single<AppDao> { get<AppDatabase>().appDao() }
         }
-        single<AppDao> { get<AppDatabase>().appDao() }
-    }
-    private val networkModule = module {
-        single<AppService> {
-            AppService.invoke()
+    private val networkModule =
+        module {
+            single<AppService> {
+                AppService.invoke()
+            }
+        }
+    private val dataSourceModule =
+        module {
+            single<MovieDataSource> {
+                MovieDataSourceImpl(get())
+            }
+            single<DetailDataSource> {
+                DetailDataSourceImpl(get())
+            }
+            single<FavoriteDataSource> {
+                FavoriteDataSourceImpl(get())
+            }
+            single<PlayNowPagingSource> {
+                PlayNowPagingSource(get())
+            }
+            single<PopularPagingSource> {
+                PopularPagingSource(get())
+            }
+            single<TopRatedPagingSource> {
+                TopRatedPagingSource(get())
+            }
+            single<UpcomingPagingSource> {
+                UpcomingPagingSource(get())
+            }
+        }
+    private val repositoryModule =
+        module {
+            single<MovieRepository> {
+                MovieRepositoryImpl(get())
+            }
+            single<DetailMovieRepository> {
+                DetailMovieRepositoryImpl(get())
+            }
+            single<FavoriteRepository> {
+                FavoriteRepositoryImpl(get())
+            }
+            single<SeeMoreRepository> {
+                SeeMoreRepositoryImpl(get())
+            }
+        }
+    private val viewModelModule =
+        module {
+            viewModel { MainViewModel(get(), get()) }
+            viewModelOf(::HomeViewModel)
+            viewModel { FavoriteViewModel(get(), get()) }
+            viewModelOf(::MoreListViewModel)
+            viewModelOf(::DetailViewModel)
+            viewModel { (extras: Bundle?) ->
+                DetailViewModel(extras, get(), get())
+            }
         }
 
-    }
-    private val dataSourceModule = module {
-        single<MovieDataSource> {
-            MovieDataSourceImpl(get())
-        }
-        single<DetailDataSource> {
-            DetailDataSourceImpl(get())
-        }
-        single<FavoriteDataSource> {
-            FavoriteDataSourceImpl(get())
-        }
-        single<PlayNowPagingSource> {
-            PlayNowPagingSource(get())
-        }
-        single<PopularPagingSource> {
-            PopularPagingSource(get())
-        }
-        single<TopRatedPagingSource> {
-            TopRatedPagingSource(get())
-        }
-        single<UpcomingPagingSource> {
-            UpcomingPagingSource(get())
-        }
-    }
-    private val repositoryModule = module {
-        single<MovieRepository> {
-            MovieRepositoryImpl(get())
-        }
-        single<DetailMovieRepository> {
-            DetailMovieRepositoryImpl(get())
-        }
-        single<FavoriteRepository> {
-            FavoriteRepositoryImpl(get())
-        }
-        single<SeeMoreRepository> {
-            SeeMoreRepositoryImpl(get())
-        }
-    }
-    private val viewModelModule = module {
-        viewModel { MainViewModel(get(), get()) }
-        viewModelOf(::HomeViewModel)
-        viewModel { FavoriteViewModel(get(), get()) }
-        viewModelOf(::MoreListViewModel)
-        viewModelOf(::DetailViewModel)
-        viewModel { (extras: Bundle?) ->
-            DetailViewModel(extras, get(),get())
-        }
-    }
-
-    val modules = listOf<Module>(
-        localModule,
-        networkModule,
-        dataSourceModule,
-        repositoryModule,
-        viewModelModule
-    )
+    val modules =
+        listOf<Module>(
+            localModule,
+            networkModule,
+            dataSourceModule,
+            repositoryModule,
+            viewModelModule,
+        )
 }

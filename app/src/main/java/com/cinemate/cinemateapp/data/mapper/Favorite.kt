@@ -3,7 +3,6 @@ package com.cinemate.cinemateapp.data.mapper
 import com.cinemate.cinemateapp.data.model.Movie
 import com.cinemate.cinemateapp.data.source.local.database.entity.AppEntity
 
-
 fun Movie?.toAppEntity() =
     AppEntity(
         movieId = this?.id ?: 0,

@@ -65,28 +65,20 @@ class HomeFragment : Fragment() {
     }
 
     private fun shareMovie(movie: Movie) {
-        val shareIntent = Intent(Intent.ACTION_SEND).apply {
-            type = "text/plain"
-            putExtra(Intent.EXTRA_TEXT, "Watch this movie! ${movie.title}\nhttps://image.tmdb.org/t/p/w500/${movie.image}")
-        }
+        val shareIntent =
+            Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                putExtra(Intent.EXTRA_TEXT, "Watch this movie! ${movie.title}\nhttps://image.tmdb.org/t/p/w500/${movie.image}")
+            }
         startActivity(Intent.createChooser(shareIntent, "Share movie via"))
     }
 
     private fun setClickAction() {
-        binding.layoutBanner.btnInfo.setOnClickListener {
-            val randomMovie = currentBannerMovie
-
-            randomMovie?.let {
-                val bottomSheetFragment = DetailFragment().apply {
-                    arguments = Bundle().apply {
-                        putParcelable(DetailFragment.EXTRAS_MOVIE, it)
-                    }
-                }
-                bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
-            }
+        binding.layoutBanner.btnInfo.setOnClickListener{
+            currentBannerMovie?.let { movie -> detailMovie(movie) }
         }
         binding.layoutBanner.btnShare.setOnClickListener {
-            currentBannerMovie?.let { movie -> shareMovie(movie)}
+            currentBannerMovie?.let { movie -> shareMovie(movie) }
         }
         binding.ivMoreNowPlaying.setOnClickListener {
             navigateToMoreListActivity(MoreListActivity.TYPE_NOW_PLAYING)
@@ -103,9 +95,10 @@ class HomeFragment : Fragment() {
     }
 
     private fun navigateToMoreListActivity(movieType: String) {
-        val intent = Intent(requireContext(), MoreListActivity::class.java).apply {
-            putExtra(MoreListActivity.MOVIE_TYPE, movieType)
-        }
+        val intent =
+            Intent(requireContext(), MoreListActivity::class.java).apply {
+                putExtra(MoreListActivity.MOVIE_TYPE, movieType)
+            }
         startActivity(intent)
     }
 
@@ -116,6 +109,7 @@ class HomeFragment : Fragment() {
             arguments = Bundle().apply {
                 putParcelable(DetailFragment.EXTRAS_MOVIE, movie)
             }
+
         }
 
         detailFragment.show(parentFragmentManager, DetailFragment::class.java.simpleName)*/
@@ -135,11 +129,12 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupAdapters() {
-        val itemClickListener = object : OnItemClickedListener<Movie> {
-            override fun onItemClicked(item: Movie) {
-                onItemClick(item)
+        val itemClickListener =
+            object : OnItemClickedListener<Movie> {
+                override fun onItemClicked(item: Movie) {
+                    onItemClick(item)
+                }
             }
-        }
 
         nowPlayingAdapter = MovieAdapter(itemClickListener)
         popularAdapter = MovieAdapter(itemClickListener)
@@ -156,7 +151,7 @@ class HomeFragment : Fragment() {
         homeViewModel.getMovieNowPlaying().observe(viewLifecycleOwner) {
             it.proceedWhen(
                 doOnSuccess = {
-                    //binding.pbLoadingNowPlaying.isVisible = false
+                    // binding.pbLoadingNowPlaying.isVisible = false
                     binding.rvMovieNowPlaying.isVisible = true
                     binding.shimmerNowPlaying.isVisible = false
                     binding.shimmerNowPlaying.stopShimmer()
@@ -165,13 +160,13 @@ class HomeFragment : Fragment() {
                     }
                 },
                 doOnLoading = {
-                    //binding.pbLoadingNowPlaying.isVisible = true
+                    // binding.pbLoadingNowPlaying.isVisible = true
                     binding.rvMovieNowPlaying.isVisible = false
                     binding.shimmerNowPlaying.isVisible = true
                     binding.shimmerNowPlaying.startShimmer()
                 },
                 doOnError = {
-                    //binding.pbLoadingNowPlaying.isVisible = false
+                    // binding.pbLoadingNowPlaying.isVisible = false
                     binding.shimmerNowPlaying.isVisible = false
                     binding.shimmerNowPlaying.stopShimmer()
                 },
@@ -183,14 +178,14 @@ class HomeFragment : Fragment() {
         homeViewModel.getMoviePopular().observe(viewLifecycleOwner) {
             it.proceedWhen(
                 doOnSuccess = {
-                    //binding.pbLoadingPopular.isVisible = false
+                    // binding.pbLoadingPopular.isVisible = false
                     binding.layoutBanner.ivBanner.isVisible = true
                     binding.layoutBanner.tvMovieTittle.isVisible = true
                     binding.layoutBanner.tvMovieDescription.isVisible = true
                     binding.layoutBanner.btnInfo.isVisible = true
                     binding.layoutBanner.btnShare.isVisible = true
 
-                    //binding.layoutBannerShimmer.ivBanner.isVisible = false
+                    // binding.layoutBannerShimmer.ivBanner.isVisible = false
 
                     binding.shimmerPopular.isVisible = false
                     binding.shimmerPopular.stopShimmer()
@@ -202,7 +197,7 @@ class HomeFragment : Fragment() {
                     }
                 },
                 doOnLoading = {
-                    //binding.pbLoadingPopular.isVisible = true
+                    // binding.pbLoadingPopular.isVisible = true
 
                     binding.layoutBanner.ivBanner.isVisible = false
                     binding.layoutBanner.tvMovieTittle.isVisible = false
@@ -210,7 +205,7 @@ class HomeFragment : Fragment() {
                     binding.layoutBanner.btnInfo.isVisible = false
                     binding.layoutBanner.btnShare.isVisible = false
 
-                    //binding.layoutBannerShimmer.ivBanner.isVisible = true
+                    // binding.layoutBannerShimmer.ivBanner.isVisible = true
 
                     binding.shimmerPopular.isVisible = true
                     binding.shimmerPopular.startShimmer()
@@ -218,7 +213,7 @@ class HomeFragment : Fragment() {
                     binding.rvMoviePopular.isVisible = false
                 },
                 doOnError = {
-                    //binding.pbLoadingPopular.isVisible = false
+                    // binding.pbLoadingPopular.isVisible = false
 
                     binding.layoutBanner.ivBanner.isVisible = true
                     binding.layoutBanner.tvMovieTittle.isVisible = true
@@ -226,7 +221,7 @@ class HomeFragment : Fragment() {
                     binding.layoutBanner.btnInfo.isVisible = true
                     binding.layoutBanner.btnShare.isVisible = true
 
-                    //binding.layoutBannerShimmer.ivBanner.isVisible = false
+                    // binding.layoutBannerShimmer.ivBanner.isVisible = false
 
                     binding.shimmerPopular.isVisible = false
                     binding.shimmerPopular.stopShimmer()
@@ -239,7 +234,7 @@ class HomeFragment : Fragment() {
         homeViewModel.getMovieUpcoming().observe(viewLifecycleOwner) {
             it.proceedWhen(
                 doOnSuccess = {
-                    //binding.pbLoadingUpcomingMovies.isVisible = false
+                    // binding.pbLoadingUpcomingMovies.isVisible = false
 
                     binding.shimmerUpcoming.isVisible = false
                     binding.shimmerUpcoming.stopShimmer()
@@ -250,14 +245,14 @@ class HomeFragment : Fragment() {
                     }
                 },
                 doOnLoading = {
-                    //binding.pbLoadingUpcomingMovies.isVisible = true
+                    // binding.pbLoadingUpcomingMovies.isVisible = true
                     binding.rvMovieUpcomingMovies.isVisible = false
 
                     binding.shimmerUpcoming.isVisible = true
                     binding.shimmerUpcoming.startShimmer()
                 },
                 doOnError = {
-                    //binding.pbLoadingUpcomingMovies.isVisible = false
+                    // binding.pbLoadingUpcomingMovies.isVisible = false
                     binding.shimmerUpcoming.isVisible = false
                     binding.shimmerUpcoming.stopShimmer()
                 },
@@ -269,7 +264,7 @@ class HomeFragment : Fragment() {
         homeViewModel.getMovieTopRating().observe(viewLifecycleOwner) {
             it.proceedWhen(
                 doOnSuccess = {
-                    //binding.pbLoadingTopRated.isVisible = false
+                    // binding.pbLoadingTopRated.isVisible = false
 
                     binding.shimmerTopRated.isVisible = false
                     binding.shimmerTopRated.stopShimmer()
@@ -280,7 +275,7 @@ class HomeFragment : Fragment() {
                     }
                 },
                 doOnLoading = {
-                    //binding.pbLoadingTopRated.isVisible = true
+                    // binding.pbLoadingTopRated.isVisible = true
 
                     binding.shimmerTopRated.isVisible = true
                     binding.shimmerTopRated.startShimmer()
@@ -288,7 +283,7 @@ class HomeFragment : Fragment() {
                     binding.rvMovieTopRated.isVisible = false
                 },
                 doOnError = {
-                    //binding.pbLoadingTopRated.isVisible = false
+                    // binding.pbLoadingTopRated.isVisible = false
 
                     binding.shimmerTopRated.isVisible = false
                     binding.shimmerTopRated.stopShimmer()
@@ -296,8 +291,6 @@ class HomeFragment : Fragment() {
             )
         }
     }
-
-
 
     private fun detailMovie(movie: Movie) {
         val detailFragmentDialog = BottomSheetDialog(requireContext())
@@ -318,7 +311,10 @@ class HomeFragment : Fragment() {
         detailFragmentDialog.show()
     }
 
-    private fun getDetailPhoto(id: Int, bottomSheetBinding: FragmentDetailBinding) {
+    private fun getDetailPhoto(
+        id: Int,
+        bottomSheetBinding: FragmentDetailBinding,
+    ) {
         homeViewModel.getCoverPhoto(id).observe(viewLifecycleOwner) { result ->
             bottomSheetBinding.ivDetailMovie.load("https://image.tmdb.org/t/p/w500${result.payload?.coverImage}")
         }
@@ -341,6 +337,7 @@ class HomeFragment : Fragment() {
             clickAddToShare(data,detailFragmentBinding)
         }
     }
+
     private fun clickAddToFavorite(
         data: Movie,
         detailFragmentBinding: FragmentDetailBinding,
@@ -349,6 +346,7 @@ class HomeFragment : Fragment() {
             addToFavorite(data)
         }
     }
+
     private fun addToFavorite(data: Movie) {
         homeViewModel.addToFavorite(data).observe(viewLifecycleOwner) {
             it.proceedWhen(

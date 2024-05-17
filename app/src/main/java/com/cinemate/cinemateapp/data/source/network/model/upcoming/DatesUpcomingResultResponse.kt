@@ -8,5 +8,5 @@ data class DatesUpcomingResultResponse(
     @SerializedName("maximum")
     var maximum: String?,
     @SerializedName("minimum")
-    var minimum: String?
+    var minimum: String?,
 )

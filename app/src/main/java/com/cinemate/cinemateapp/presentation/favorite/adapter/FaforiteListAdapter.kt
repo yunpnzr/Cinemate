@@ -8,11 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.cinemate.cinemateapp.data.model.Movie
 import com.cinemate.cinemateapp.databinding.ItemMovieBinding
-import com.cinemate.cinemateapp.presentation.home.adapters.movie.MovieAdapter
-
 
 class FavoriteListAdapter(private val itemClick: (Movie) -> Unit) :
-    RecyclerView.Adapter<FavoriteListAdapter.FavoriteViewHolder>()  {
+    RecyclerView.Adapter<FavoriteListAdapter.FavoriteViewHolder>() {
     private val dataDiffer =
         AsyncListDiffer(
             this,
@@ -33,30 +31,29 @@ class FavoriteListAdapter(private val itemClick: (Movie) -> Unit) :
             },
         )
 
-
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
     ): FavoriteViewHolder {
         val binding =
-                ItemMovieBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false,
-                )
+            ItemMovieBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false,
+            )
         return FavoriteViewHolder(binding, itemClick)
-
     }
+
     fun submitData(data: List<Movie>) {
         dataDiffer.submitList(data)
     }
 
-
-
     override fun getItemCount(): Int = dataDiffer.currentList.size
 
-    override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: FavoriteViewHolder,
+        position: Int,
+    ) {
         holder.bind(dataDiffer.currentList[position])
     }
 
@@ -64,7 +61,6 @@ class FavoriteListAdapter(private val itemClick: (Movie) -> Unit) :
         private val binding: ItemMovieBinding,
         val itemClick: (Movie) -> Unit,
     ) : RecyclerView.ViewHolder(binding.root), ViewHolderBinder<Movie> {
-
         override fun bind(item: Movie) {
             with(item) {
                 binding.ivMovieImage.load("https://image.tmdb.org/t/p/w500/${item.image}") {
@@ -73,13 +69,8 @@ class FavoriteListAdapter(private val itemClick: (Movie) -> Unit) :
                 itemView.setOnClickListener { itemClick(this) }
             }
         }
-
     }
 }
-
-
-
-
 
 interface ViewHolderBinder<T> {
     fun bind(item: T)

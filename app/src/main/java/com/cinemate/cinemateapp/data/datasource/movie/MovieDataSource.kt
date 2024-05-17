@@ -7,7 +7,10 @@ import com.cinemate.cinemateapp.data.source.network.model.upcoming.UpcomingMovie
 
 interface MovieDataSource {
     suspend fun getNowPlaying(page: Int): NowPlayingResponse
+
     suspend fun getPopular(page: Int): PopularMovieResponse
+
     suspend fun getTopRating(page: Int): TopRatedResponse
+
     suspend fun getUpcoming(page: Int): UpcomingMovieResponse
 }

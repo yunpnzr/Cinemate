@@ -18,5 +18,5 @@ data class AppEntity(
     @ColumnInfo("movie_desc")
     var movieDesc: String,
     @ColumnInfo("movie_image")
-    var movieImage: String
+    var movieImage: String,
 )
