@@ -12,7 +12,6 @@ import com.cinemate.cinemateapp.R
 import com.cinemate.cinemateapp.data.model.Movie
 import com.cinemate.cinemateapp.databinding.FragmentDetailBinding
 import com.cinemate.cinemateapp.databinding.FragmentFavoriteBinding
-import com.cinemate.cinemateapp.presentation.detail.DetailFragment
 import com.cinemate.cinemateapp.presentation.favorite.adapter.FavoriteListAdapter
 import com.cinemate.cinemateapp.utils.proceedWhen
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -26,7 +25,7 @@ class FavoriteFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         binding = FragmentFavoriteBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -95,7 +94,7 @@ class FavoriteFragment : Fragment() {
         val detailFragmentDialog = BottomSheetDialog(requireContext())
         val bottomSheetBinding = FragmentDetailBinding.inflate(layoutInflater)
         bottomSheetBinding.apply {
-            ivDetailMovie.load("https://image.tmdb.org/t/p/w500${movie.image}")
+            //ivDetailMovie.load("https://image.tmdb.org/t/p/w500${movie.image}")
             ivMovie.load("https://image.tmdb.org/t/p/w500${movie.image}")
             tvTittleMovie.text = movie.title
             tvDescMovie.text = movie.desc
@@ -104,11 +103,17 @@ class FavoriteFragment : Fragment() {
         }
         movieInFavorite(movie, bottomSheetBinding)
 
+        getDetailPhoto(movie.id, bottomSheetBinding)
+
         detailFragmentDialog.setContentView(bottomSheetBinding.root)
         detailFragmentDialog.show()
     }
 
-
+    private fun getDetailPhoto(id: Int, bottomSheetBinding: FragmentDetailBinding) {
+        FavoriteviewModel.getCoverPhoto(id).observe(viewLifecycleOwner) { result ->
+            bottomSheetBinding.ivDetailMovie.load("https://image.tmdb.org/t/p/w500${result.payload?.coverImage}")
+        }
+    }
 
     private fun movieInFavorite(
         data: Movie,
