@@ -1,11 +1,8 @@
 package com.cinemate.cinemateapp.data.repository.favorite
-import com.cinemate.cinemateapp.data.repository.favorite.FavoriteRepository
 import com.cinemate.cinemateapp.data.datasource.favorite.FavoriteDataSource
 import com.cinemate.cinemateapp.data.mapper.toAppEntity
 import com.cinemate.cinemateapp.data.mapper.toFavoriteList
-import com.cinemate.cinemateapp.data.model.Favorite
 import com.cinemate.cinemateapp.data.model.Movie
-import com.cinemate.cinemateapp.data.model.MovieDetail
 import com.cinemate.cinemateapp.data.source.local.database.entity.AppEntity
 import com.cinemate.cinemateapp.utils.ResultWrapper
 import com.cinemate.cinemateapp.utils.proceed
@@ -19,9 +16,18 @@ import java.lang.IllegalStateException
 
 class FavoriteRepositoryImpl(private val dataSource: FavoriteDataSource): FavoriteRepository {
 
-    override fun deleteFavorite(item: Favorite): Flow<ResultWrapper<Boolean>> {
+    override fun deleteFavorite(item: Movie): Flow<ResultWrapper<Boolean>> {
         return proceedFlow { dataSource.deleteFavorite(item.toAppEntity()) > 0 }
     }
+    override fun checkFavoriteById(movieId: Int?): Flow<List<AppEntity>> {
+        return dataSource.checkFavoriteById(movieId)
+    }
+
+
+    override fun removeFavoriteById(favoriteId: Int?): Flow<ResultWrapper<Boolean>> {
+        return proceedFlow { dataSource.removeFavoriteById(favoriteId) > 0 }
+    }
+
 
     override fun deleteAll(): Flow<ResultWrapper<Boolean>> {
         return proceedFlow {
@@ -30,13 +36,13 @@ class FavoriteRepositoryImpl(private val dataSource: FavoriteDataSource): Favori
         }
     }
 
-    override fun getAllFavorite(): Flow<ResultWrapper<Pair<List<Favorite>, Double>>> {
+    override fun getAllFavorite(): Flow<ResultWrapper<Pair<List<Movie>, Double>>> {
         return dataSource.getAllFavorites()
             .map {
                 // mapping into Favorite list and sum the total price
                 proceed {
                     val result = it.toFavoriteList()
-                    val totalPrice = result.sumOf { it.movieRating }
+                    val totalPrice = result.sumOf { it.rating}
                     Pair(result, totalPrice)
                 }
             }.map {
@@ -45,9 +51,11 @@ class FavoriteRepositoryImpl(private val dataSource: FavoriteDataSource): Favori
                 ResultWrapper.Empty(it.payload)
             }.onStart {
                 emit(ResultWrapper.Loading())
-                delay(1000)
+                delay(300)
             }
     }
+
+
 
     override fun createFavorite(item: Movie): Flow<ResultWrapper<Boolean>> {
         return item.id?.let { itemId ->
@@ -62,10 +70,9 @@ class FavoriteRepositoryImpl(private val dataSource: FavoriteDataSource): Favori
                             movieRating = item.rating,
                             movieDesc = item.desc,
                             movieDate = item.date,
-                            movieBool = true
                         ),
                     )
-                delay(2000)
+                delay(100)
                 affectedRow > 0
             }
         } ?: flow {

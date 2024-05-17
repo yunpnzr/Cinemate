@@ -8,8 +8,8 @@ import com.cinemate.cinemateapp.data.source.local.database.dao.AppDao
 import com.cinemate.cinemateapp.data.source.local.database.entity.AppEntity
 
 @Database(
-    entities = arrayOf(AppEntity::class),
-    version = 1,
+    entities = [AppEntity::class],
+    version = 3,
     exportSchema = false,
 )
 abstract class AppDatabase: RoomDatabase() {

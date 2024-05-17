@@ -10,6 +10,7 @@ import coil.load
 import com.cinemate.cinemateapp.R
 import com.cinemate.cinemateapp.data.model.Movie
 import com.cinemate.cinemateapp.data.model.MovieDetail
+import com.cinemate.cinemateapp.data.source.local.database.entity.AppEntity
 import com.cinemate.cinemateapp.databinding.FragmentDetailBinding
 import com.cinemate.cinemateapp.utils.proceedWhen
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -21,6 +22,7 @@ class DetailFragment : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentDetailBinding
     private var currentBannerMovie: MovieDetail? = null
+    private var appEntity: AppEntity? = null
     private val viewModel: DetailViewModel by viewModel {
         parametersOf(arguments)
     }
@@ -38,6 +40,7 @@ class DetailFragment : BottomSheetDialogFragment() {
 
         observeData()
         setClickAction()
+
     }
 
     private fun setClickAction() {
@@ -52,7 +55,7 @@ class DetailFragment : BottomSheetDialogFragment() {
     }
 
     private fun addMovieToFavorite() {
-        viewModel.addToFavorite().observe(this) {
+        viewModel.addToFavorite(appEntity).observe(this) {
             it.proceedWhen(
                 doOnSuccess = {
                     Toast.makeText(
@@ -102,6 +105,7 @@ class DetailFragment : BottomSheetDialogFragment() {
             }
         }
     }
+
 
 
     private fun setBind(menu: MovieDetail?) {
