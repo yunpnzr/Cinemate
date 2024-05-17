@@ -338,6 +338,7 @@ class HomeFragment : Fragment() {
                 detailFragmentBinding.btnMyList.setImageResource(R.drawable.ic_check)
                 clickRemoveFavorite(data.id, detailFragmentBinding)
             }
+            clickAddToShare(data,detailFragmentBinding)
         }
     }
     private fun clickAddToFavorite(
@@ -404,6 +405,18 @@ class HomeFragment : Fragment() {
                     ).show()
                 },
             )
+        }
+    }
+    private fun clickAddToShare(
+        data: Movie,
+        detailFragmentBinding: FragmentDetailBinding,
+    ) {
+        detailFragmentBinding.btnShare.setOnClickListener {
+            val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                putExtra(Intent.EXTRA_TEXT, "Watch this movie! ${data.title}\nhttps://image.tmdb.org/t/p/w500/${data.image}")
+            }
+            startActivity(Intent.createChooser(shareIntent, "Share movie via"))
         }
     }
 }
