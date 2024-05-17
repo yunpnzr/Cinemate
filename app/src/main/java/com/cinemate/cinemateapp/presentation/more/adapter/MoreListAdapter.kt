@@ -6,6 +6,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.cinemate.cinemateapp.R
 import com.cinemate.cinemateapp.base.OnItemClickListener
 import com.cinemate.cinemateapp.data.model.Movie
 import com.cinemate.cinemateapp.databinding.ItemMovieListBinding
@@ -59,7 +60,7 @@ class MoreListAdapter(
             binding.ivMovieListPopular.load("https://image.tmdb.org/t/p/w500/${item.image}") {
                 crossfade(true)
             }
-            binding.tvRating.text = item.rating.toString()
+            binding.tvRating.text = itemView.context.getString(R.string.rating_format, item.rating)
             itemView.setOnClickListener {
                 listener.onClicked(item)
             }

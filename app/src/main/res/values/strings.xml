@@ -27,4 +27,5 @@
     <string name="text_error_empty_content">This Content Is Empty</string>
     <string name="text_succes_delete_to_favorite">Movie berhasil dihapus dari Favorit</string>
     <string name="text_faliled_delete_to_favorite">Gagal Menghapus Movie</string>
+    <string name="rating_format">%.2f/10</string>
 </resources>
