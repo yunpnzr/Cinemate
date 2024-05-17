@@ -110,15 +110,15 @@ class HomeFragment : Fragment() {
     }
 
     private fun onItemClick(movie: Movie) {
-        //detailMovie(movie)
+        detailMovie(movie)
 
-        val detailFragment = DetailFragment().apply {
+        /*val detailFragment = DetailFragment().apply {
             arguments = Bundle().apply {
                 putParcelable(DetailFragment.EXTRAS_MOVIE, movie)
             }
         }
 
-        detailFragment.show(parentFragmentManager, DetailFragment::class.java.simpleName)
+        detailFragment.show(parentFragmentManager, DetailFragment::class.java.simpleName)*/
     }
 
     private fun bindDataMovie(movie: List<Movie>) {
@@ -312,11 +312,17 @@ class HomeFragment : Fragment() {
         }
         movieInFavorite(movie, bottomSheetBinding)
 
+        getDetailPhoto(movie.id, bottomSheetBinding)
+
         detailFragmentDialog.setContentView(bottomSheetBinding.root)
         detailFragmentDialog.show()
     }
 
-
+    private fun getDetailPhoto(id: Int, bottomSheetBinding: FragmentDetailBinding) {
+        homeViewModel.getCoverPhoto(id).observe(viewLifecycleOwner) { result ->
+            bottomSheetBinding.ivDetailMovie.load("https://image.tmdb.org/t/p/w500${result.payload?.coverImage}")
+        }
+    }
 
     private fun movieInFavorite(
         data: Movie,
