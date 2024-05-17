@@ -5,9 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import coil.load
+import com.cinemate.cinemateapp.R
 import com.cinemate.cinemateapp.data.model.Movie
 import com.cinemate.cinemateapp.data.model.MovieDetail
+import com.cinemate.cinemateapp.data.source.local.database.entity.AppEntity
 import com.cinemate.cinemateapp.databinding.FragmentDetailBinding
 import com.cinemate.cinemateapp.utils.proceedWhen
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -19,6 +22,7 @@ class DetailFragment : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentDetailBinding
     private var currentBannerMovie: MovieDetail? = null
+    private var appEntity: AppEntity? = null
     private val viewModel: DetailViewModel by viewModel {
         parametersOf(arguments)
     }
@@ -36,6 +40,7 @@ class DetailFragment : BottomSheetDialogFragment() {
 
         observeData()
         setClickAction()
+
     }
 
     private fun setClickAction() {
@@ -43,6 +48,38 @@ class DetailFragment : BottomSheetDialogFragment() {
             currentBannerMovie?.let { movie ->
                 shareMovie(movie)
             }
+        }
+        binding.btnMyList.setOnClickListener {
+            addMovieToFavorite()
+        }
+    }
+
+    private fun addMovieToFavorite() {
+        viewModel.addToFavorite(appEntity).observe(this) {
+            it.proceedWhen(
+                doOnSuccess = {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.text_succes_add_to_favorite),
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                },
+                doOnError = {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.text_faliled_add_to_favorite),
+                        Toast.LENGTH_SHORT,
+                    )
+                        .show()
+                },
+                doOnLoading = {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.text_load_add_to_favorite),
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                },
+            )
         }
     }
 
@@ -68,6 +105,7 @@ class DetailFragment : BottomSheetDialogFragment() {
             }
         }
     }
+
 
 
     private fun setBind(menu: MovieDetail?) {

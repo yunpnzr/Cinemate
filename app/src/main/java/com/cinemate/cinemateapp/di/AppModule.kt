@@ -90,7 +90,7 @@ object AppModule {
         viewModelOf(::MoreListViewModel)
         viewModelOf(::DetailViewModel)
         viewModel { (extras: Bundle?) ->
-            DetailViewModel(extras, get())
+            DetailViewModel(extras, get(),get())
         }
     }
 

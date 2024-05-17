@@ -18,7 +18,5 @@ data class AppEntity(
     @ColumnInfo("movie_desc")
     var movieDesc: String,
     @ColumnInfo("movie_image")
-    var movieImage: String,
-    @ColumnInfo(name = "movie_bool")
-    var movieBool: Boolean,
+    var movieImage: String
 )

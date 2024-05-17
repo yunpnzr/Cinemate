@@ -1,5 +1,9 @@
 package com.cinemate.cinemateapp.data.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class MovieDetail (
     var id: Int,
     var title: String,
@@ -8,4 +12,4 @@ data class MovieDetail (
     var desc: String,
     var image: String,
     var coverImage: String
-)
+): Parcelable

@@ -6,99 +6,80 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.cinemate.cinemateapp.data.model.Favorite
-import com.cinemate.cinemateapp.databinding.ItemFavoriteBinding
+import com.cinemate.cinemateapp.data.model.Movie
+import com.cinemate.cinemateapp.databinding.ItemMovieBinding
+import com.cinemate.cinemateapp.presentation.home.adapters.movie.MovieAdapter
 
 
-class FavoriteListAdapter(private val favoriteListener: FavoriteListener? = null) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class FavoriteListAdapter(private val itemClick: (Movie) -> Unit) :
+    RecyclerView.Adapter<FavoriteListAdapter.FavoriteViewHolder>()  {
     private val dataDiffer =
         AsyncListDiffer(
             this,
-            object : DiffUtil.ItemCallback<Favorite>() {
+            object : DiffUtil.ItemCallback<Movie>() {
                 override fun areItemsTheSame(
-                    oldItem: Favorite,
-                    newItem: Favorite,
+                    oldItem: Movie,
+                    newItem: Movie,
                 ): Boolean {
-                    return oldItem.movieId == newItem.movieId && oldItem.movieId == newItem.movieId
+                    return oldItem.id == newItem.id && oldItem.id == newItem.id
                 }
 
                 override fun areContentsTheSame(
-                    oldItem: Favorite,
-                    newItem: Favorite,
+                    oldItem: Movie,
+                    newItem: Movie,
                 ): Boolean {
                     return oldItem.hashCode() == newItem.hashCode()
                 }
             },
         )
 
-    fun submitData(data: List<Favorite>) {
-        dataDiffer.submitList(data)
-    }
+
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): RecyclerView.ViewHolder {
-        return if (favoriteListener != null) {
-            FavoriteViewHolder(
-                ItemFavoriteBinding.inflate(
+    ): FavoriteViewHolder {
+        val binding =
+                ItemMovieBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false,
-                ),
-                favoriteListener,
-            )
-        } else {
-            FavoriteViewHolder(
-                ItemFavoriteBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false,
-                ),
-                favoriteListener,
-            )
-        }
+                )
+        return FavoriteViewHolder(binding, itemClick)
+
     }
+    fun submitData(data: List<Movie>) {
+        dataDiffer.submitList(data)
+    }
+
+
 
     override fun getItemCount(): Int = dataDiffer.currentList.size
 
-    override fun onBindViewHolder(
-        holder: RecyclerView.ViewHolder,
-        position: Int,
-    ) {
-        (holder as ViewHolderBinder<Favorite>).bind(dataDiffer.currentList[position])
-    }
-}
-
-class FavoriteViewHolder(
-    private val binding: ItemFavoriteBinding,
-    private val favoriteListener: FavoriteListener?,
-) : RecyclerView.ViewHolder(binding.root), ViewHolderBinder<Favorite> {
-    override fun bind(item: Favorite) {
-        setCartData(item)
-        setClickListeners(item)
+    override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
+        holder.bind(dataDiffer.currentList[position])
     }
 
-    private fun setCartData(item: Favorite) {
-        with(binding) {
-            binding.ivImgItemFavorite.load(item.movieImage) {
-                crossfade(true)
+    class FavoriteViewHolder(
+        private val binding: ItemMovieBinding,
+        val itemClick: (Movie) -> Unit,
+    ) : RecyclerView.ViewHolder(binding.root), ViewHolderBinder<Movie> {
+
+        override fun bind(item: Movie) {
+            with(item) {
+                binding.ivMovieImage.load("https://image.tmdb.org/t/p/w500/${item.image}") {
+                    crossfade(true)
+                }
+                itemView.setOnClickListener { itemClick(this) }
             }
         }
-    }
 
-    private fun setClickListeners(item: Favorite) {
-        // ntar buat close dari layout favorite nya
-//        with(binding) {
-//            ivRemoveFavorite.setOnClickListener { favoriteListener?.onRemoveFavoriteClicked(item) }
-//        }
     }
 }
 
-interface FavoriteListener {
-    fun onRemoveFavoriteClicked(item: Favorite)
-}
+
+
+
 
 interface ViewHolderBinder<T> {
     fun bind(item: T)

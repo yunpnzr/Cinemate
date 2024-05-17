@@ -1,28 +1,27 @@
 package com.cinemate.cinemateapp.data.mapper
 
-import com.cinemate.cinemateapp.data.model.Favorite
+import com.cinemate.cinemateapp.data.model.Movie
 import com.cinemate.cinemateapp.data.source.local.database.entity.AppEntity
 
-fun Favorite?.toAppEntity() =
+
+fun Movie?.toAppEntity() =
     AppEntity(
-        movieId = this?.movieId ?: 0,
-        movieTitle = this?.movieTitle.orEmpty(),
-        movieDate = this?.movieDate.orEmpty(),
-        movieRating = this?.movieRating ?: 0.0,
-        movieDesc = this?.movieDesc.orEmpty(),
-        movieImage = this?.movieImage.orEmpty(),
-        movieBool = this?.movieBool ?: false
+        movieId = this?.id ?: 0,
+        movieTitle = this?.title.orEmpty(),
+        movieDate = this?.date.orEmpty(),
+        movieRating = this?.rating ?: 0.0,
+        movieDesc = this?.desc.orEmpty(),
+        movieImage = this?.image.orEmpty(),
     )
 
 fun AppEntity?.toFavorite() =
-    Favorite(
-        movieId = this?.movieId ?: 0,
-        movieTitle = this?.movieTitle.orEmpty(),
-        movieDate = this?.movieDate.orEmpty(),
-        movieRating = this?.movieRating ?: 0.0,
-        movieDesc = this?.movieDesc.orEmpty(),
-        movieImage = this?.movieImage.orEmpty(),
-        movieBool = this?.movieBool ?: false
+    Movie(
+        id = this?.movieId ?: 0,
+        title = this?.movieTitle.orEmpty(),
+        date = this?.movieDate.orEmpty(),
+        rating = this?.movieRating ?: 0.0,
+        desc = this?.movieDesc.orEmpty(),
+        image = this?.movieImage.orEmpty(),
     )
 
 fun Collection<AppEntity?>.toFavoriteList() = this.map { it.toFavorite() }
