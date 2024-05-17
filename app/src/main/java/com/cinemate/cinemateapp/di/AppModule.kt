@@ -86,7 +86,7 @@ object AppModule {
     private val viewModelModule = module {
         viewModel { MainViewModel(get(), get()) }
         viewModelOf(::HomeViewModel)
-        viewModel { FavoriteViewModel(get()) }
+        viewModel { FavoriteViewModel(get(), get()) }
         viewModelOf(::MoreListViewModel)
         viewModelOf(::DetailViewModel)
         viewModel { (extras: Bundle?) ->
