@@ -1,6 +1,5 @@
 package com.cinemate.cinemateapp.data.source.network.model.detail
 
-
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
