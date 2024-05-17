@@ -104,6 +104,8 @@ dependencies {
 
     implementation(libs.paging)
 
+    implementation(libs.shimmer)
+
     implementation(libs.koin.android)
 
     androidTestImplementation(libs.mockk.android)
