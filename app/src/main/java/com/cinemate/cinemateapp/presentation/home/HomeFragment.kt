@@ -6,11 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.setupWithNavController
 import coil.load
 import com.cinemate.cinemateapp.R
 import com.cinemate.cinemateapp.data.model.Movie
@@ -113,7 +110,15 @@ class HomeFragment : Fragment() {
     }
 
     private fun onItemClick(movie: Movie) {
-        detailMovie(movie)
+        //detailMovie(movie)
+
+        val detailFragment = DetailFragment().apply {
+            arguments = Bundle().apply {
+                putParcelable(DetailFragment.EXTRAS_MOVIE, movie)
+            }
+        }
+
+        detailFragment.show(parentFragmentManager, DetailFragment::class.java.simpleName)
     }
 
     private fun bindDataMovie(movie: List<Movie>) {
@@ -151,18 +156,24 @@ class HomeFragment : Fragment() {
         homeViewModel.getMovieNowPlaying().observe(viewLifecycleOwner) {
             it.proceedWhen(
                 doOnSuccess = {
-                    binding.pbLoadingNowPlaying.isVisible = false
+                    //binding.pbLoadingNowPlaying.isVisible = false
                     binding.rvMovieNowPlaying.isVisible = true
+                    binding.shimmerNowPlaying.isVisible = false
+                    binding.shimmerNowPlaying.stopShimmer()
                     it.payload?.let { data ->
                         nowPlayingAdapter.submitData(data)
                     }
                 },
                 doOnLoading = {
-                    binding.pbLoadingNowPlaying.isVisible = true
+                    //binding.pbLoadingNowPlaying.isVisible = true
                     binding.rvMovieNowPlaying.isVisible = false
+                    binding.shimmerNowPlaying.isVisible = true
+                    binding.shimmerNowPlaying.startShimmer()
                 },
                 doOnError = {
-                    binding.pbLoadingNowPlaying.isVisible = false
+                    //binding.pbLoadingNowPlaying.isVisible = false
+                    binding.shimmerNowPlaying.isVisible = false
+                    binding.shimmerNowPlaying.stopShimmer()
                 },
             )
         }
@@ -172,7 +183,18 @@ class HomeFragment : Fragment() {
         homeViewModel.getMoviePopular().observe(viewLifecycleOwner) {
             it.proceedWhen(
                 doOnSuccess = {
-                    binding.pbLoadingPopular.isVisible = false
+                    //binding.pbLoadingPopular.isVisible = false
+                    binding.layoutBanner.ivBanner.isVisible = true
+                    binding.layoutBanner.tvMovieTittle.isVisible = true
+                    binding.layoutBanner.tvMovieDescription.isVisible = true
+                    binding.layoutBanner.btnInfo.isVisible = true
+                    binding.layoutBanner.btnShare.isVisible = true
+
+                    //binding.layoutBannerShimmer.ivBanner.isVisible = false
+
+                    binding.shimmerPopular.isVisible = false
+                    binding.shimmerPopular.stopShimmer()
+
                     binding.rvMoviePopular.isVisible = true
                     it.payload?.let { data ->
                         bindDataMovie(data)
@@ -180,11 +202,34 @@ class HomeFragment : Fragment() {
                     }
                 },
                 doOnLoading = {
-                    binding.pbLoadingPopular.isVisible = true
+                    //binding.pbLoadingPopular.isVisible = true
+
+                    binding.layoutBanner.ivBanner.isVisible = false
+                    binding.layoutBanner.tvMovieTittle.isVisible = false
+                    binding.layoutBanner.tvMovieDescription.isVisible = false
+                    binding.layoutBanner.btnInfo.isVisible = false
+                    binding.layoutBanner.btnShare.isVisible = false
+
+                    //binding.layoutBannerShimmer.ivBanner.isVisible = true
+
+                    binding.shimmerPopular.isVisible = true
+                    binding.shimmerPopular.startShimmer()
+
                     binding.rvMoviePopular.isVisible = false
                 },
                 doOnError = {
-                    binding.pbLoadingPopular.isVisible = false
+                    //binding.pbLoadingPopular.isVisible = false
+
+                    binding.layoutBanner.ivBanner.isVisible = true
+                    binding.layoutBanner.tvMovieTittle.isVisible = true
+                    binding.layoutBanner.tvMovieDescription.isVisible = true
+                    binding.layoutBanner.btnInfo.isVisible = true
+                    binding.layoutBanner.btnShare.isVisible = true
+
+                    //binding.layoutBannerShimmer.ivBanner.isVisible = false
+
+                    binding.shimmerPopular.isVisible = false
+                    binding.shimmerPopular.stopShimmer()
                 },
             )
         }
@@ -194,18 +239,27 @@ class HomeFragment : Fragment() {
         homeViewModel.getMovieUpcoming().observe(viewLifecycleOwner) {
             it.proceedWhen(
                 doOnSuccess = {
-                    binding.pbLoadingUpcomingMovies.isVisible = false
+                    //binding.pbLoadingUpcomingMovies.isVisible = false
+
+                    binding.shimmerUpcoming.isVisible = false
+                    binding.shimmerUpcoming.stopShimmer()
+
                     binding.rvMovieUpcomingMovies.isVisible = true
                     it.payload?.let { data ->
                         upcomingAdapter.submitData(data)
                     }
                 },
                 doOnLoading = {
-                    binding.pbLoadingUpcomingMovies.isVisible = true
+                    //binding.pbLoadingUpcomingMovies.isVisible = true
                     binding.rvMovieUpcomingMovies.isVisible = false
+
+                    binding.shimmerUpcoming.isVisible = true
+                    binding.shimmerUpcoming.startShimmer()
                 },
                 doOnError = {
-                    binding.pbLoadingUpcomingMovies.isVisible = false
+                    //binding.pbLoadingUpcomingMovies.isVisible = false
+                    binding.shimmerUpcoming.isVisible = false
+                    binding.shimmerUpcoming.stopShimmer()
                 },
             )
         }
@@ -215,18 +269,29 @@ class HomeFragment : Fragment() {
         homeViewModel.getMovieTopRating().observe(viewLifecycleOwner) {
             it.proceedWhen(
                 doOnSuccess = {
-                    binding.pbLoadingTopRated.isVisible = false
+                    //binding.pbLoadingTopRated.isVisible = false
+
+                    binding.shimmerTopRated.isVisible = false
+                    binding.shimmerTopRated.stopShimmer()
+
                     binding.rvMovieTopRated.isVisible = true
                     it.payload?.let { data ->
                         topRatedAdapter.submitData(data)
                     }
                 },
                 doOnLoading = {
-                    binding.pbLoadingTopRated.isVisible = true
+                    //binding.pbLoadingTopRated.isVisible = true
+
+                    binding.shimmerTopRated.isVisible = true
+                    binding.shimmerTopRated.startShimmer()
+
                     binding.rvMovieTopRated.isVisible = false
                 },
                 doOnError = {
-                    binding.pbLoadingTopRated.isVisible = false
+                    //binding.pbLoadingTopRated.isVisible = false
+
+                    binding.shimmerTopRated.isVisible = false
+                    binding.shimmerTopRated.stopShimmer()
                 },
             )
         }

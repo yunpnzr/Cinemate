@@ -142,4 +142,5 @@
     <color name="md_theme_surfaceContainerHighest_highContrast">#353535</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="shimmer">#5BDDDDDD</color>
 </resources>
